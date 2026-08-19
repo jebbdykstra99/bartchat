@@ -316,10 +316,137 @@ body.right-collapsed .right-panel-tab svg { transform: scaleX(1); }
 }
 .thoughts-toolbar { display: flex; align-items: center; gap: 0.05rem; }
 .thoughts-toolbar-btn {
-  background: none; border: none; cursor: default;
+  background: none; border: none; cursor: pointer;
   color: var(--teal); padding: 0.45rem; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
 }
+.thoughts-toolbar-btn:hover {
+  background: rgba(0,0,0,0.06);
+  color: var(--accent);
+}
+.thoughts-compose-wrap.drag-over {
+  outline: 2px dashed var(--accent);
+  outline-offset: -4px;
+}
+.compose-image-preview {
+  position: relative; margin: 0.5rem 0 0.3rem 3.3rem;
+  display: inline-block;
+}
+.compose-image-preview img {
+  max-height: 180px; max-width: 100%;
+  border-radius: 10px; border: 1px solid var(--border);
+  display: block;
+}
+.compose-image-remove {
+  position: absolute; top: 5px; right: 5px;
+  background: rgba(0,0,0,0.55); color: #fff;
+  border: none; border-radius: 50%;
+  width: 22px; height: 22px; cursor: pointer;
+  font-size: 1rem; line-height: 1.5;
+  display: flex; align-items: center; justify-content: center;
+}
+.compose-image-remove:hover { background: rgba(0,0,0,0.75); }
+.compose-upload-bar {
+  height: 3px; background: var(--border); border-radius: 2px;
+  margin: 0.3rem 0 0 3.3rem; overflow: hidden;
+}
+.compose-upload-bar-fill {
+  height: 100%; background: var(--accent);
+  width: 0%; transition: width 0.3s;
+}
+.compose-poll {
+  margin: 0.5rem 0 0 3.3rem;
+  border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+  background: var(--bg);
+}
+.compose-poll-option {
+  display: flex; align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding: 0 0.8rem;
+}
+.compose-poll-option:last-of-type { border-bottom: none; }
+.compose-poll-input {
+  flex: 1; border: none; outline: none; background: transparent;
+  padding: 0.65rem 0;
+  font-family: var(--ui);
+  font-size: 0.92rem; color: var(--text);
+}
+.compose-poll-input::placeholder { color: var(--text-light); }
+.compose-poll-remove {
+  background: none; border: none; cursor: pointer;
+  color: var(--text-light); font-size: 1rem;
+  padding: 0 0 0 0.5rem;
+  opacity: 0.5;
+}
+.compose-poll-remove:hover { opacity: 1; color: #dc3545; }
+.compose-poll-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.5rem 0.8rem;
+  border-top: 1px solid var(--border);
+  background: rgba(0,0,0,0.02);
+}
+.compose-poll-add {
+  background: none; border: none; cursor: pointer;
+  font-family: var(--ui);
+  font-size: 0.875rem; color: var(--accent);
+  padding: 0;
+}
+.compose-poll-add:hover { color: var(--accent-dark); }
+.compose-poll-duration {
+  font-family: var(--ui);
+  font-size: 0.875rem; color: var(--text-muted);
+  border: 1px solid var(--border); border-radius: 4px;
+  padding: 0.2rem 0.5rem; background: transparent;
+  outline: none; cursor: pointer;
+}
+.compose-emoji-wrap {
+  position: fixed; z-index: 9999;
+}
+.compose-emoji-wrap emoji-picker {
+  --background: var(--bg);
+  --border-color: var(--border);
+  --emoji-size: 1.3rem;
+  --num-columns: 8;
+  height: 300px;
+  width: 320px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.post-image {
+  margin-top: 0.7rem;
+  border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--border);
+}
+.post-image img {
+  width: 100%; max-height: 420px; object-fit: contain;
+  display: block; border-radius: 10px; background: var(--bg);
+}
+.post-poll { margin-top: 0.7rem; }
+.post-poll-option {
+  position: relative; border: 1px solid var(--border);
+  border-radius: 6px; padding: 0.45rem 0.8rem;
+  margin-bottom: 0.35rem; cursor: pointer;
+  overflow: hidden;
+}
+.post-poll-option:hover { border-color: var(--accent); }
+.post-poll-option.voted { border-color: var(--accent); }
+.post-poll-bar {
+  position: absolute; inset: 0; background: var(--accent);
+  opacity: 0.15; transform-origin: left; transition: width 0.3s;
+}
+.post-poll-label {
+  position: relative; font-size: 0.88rem; color: var(--text);
+}
+.post-poll-pct {
+  position: absolute; right: 0.8rem; top: 50%; transform: translateY(-50%);
+  font-size: 0.875rem; color: var(--text-muted);
+}
+.post-poll-meta {
+  font-size: 0.875rem; color: var(--text-muted); margin-top: 0.3rem;
+}
+
 .thoughts-post-btn {
   background: var(--accent); color: #fff; border: none;
   border-radius: 999px; padding: 0.48rem 1.15rem;
