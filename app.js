@@ -49,6 +49,7 @@
       name: d.authorName || 'Member',
       handle: d.authorHandle || 'member',
       text: d.text || '',
+      ms: ms,
       hours: Math.max(0, Math.round((Date.now() - ms) / 3600000)),
       likes: d.likeCount || 0,
       replies: d.replyCount || 0,
@@ -61,23 +62,14 @@
     if (!fbDb) return;
     fbDb.collection('posts').where('siteId', '==', SITE_ID).limit(80)
       .onSnapshot(function (snap) {
-        livePosts = snap.docs.map(mapLive);
+        livePosts = snap.docs.map(mapLive).sort(function (a, b) { return (b.ms || 0) - (a.ms || 0); });
         renderFeed();
         if (currentUser) syncProfile();
-      }, function (err) { console.warn('posts listen', err); });
+      }, function (err) {
+        console.warn('posts listen', err);
+        composeErr((err && err.message) ? ('Feed: ' + err.message) : 'Could not load live posts.');
+      });
   }
-  if (fbAuth) {
-    fbAuth.onAuthStateChanged(function (user) {
-      if (user) applyFbUser(user);
-      else if (currentUser && currentUser.live) {
-        currentUser = null;
-        saveJSON(LS_USER, null);
-        renderSidebarAuth();
-        syncProfile();
-      }
-    });
-  }
-
   const hamburger = document.getElementById('hamburger');
   const sidebar = document.getElementById('sidebar');
 
@@ -175,6 +167,18 @@
   }
 
   let currentUser = loadJSON(LS_USER, null);
+
+  if (fbAuth) {
+    fbAuth.onAuthStateChanged(function (user) {
+      if (user) applyFbUser(user);
+      else if (currentUser && currentUser.live) {
+        currentUser = null;
+        saveJSON(LS_USER, null);
+        renderSidebarAuth();
+        syncProfile();
+      }
+    });
+  }
   let likes = loadJSON(LS_LIKES, {});
   let extraPosts = loadJSON(LS_POSTS, []);
   let currentTab = 'foryou';
@@ -519,36 +523,54 @@
   }
 
 
+  function composeErr(msg) {
+    var el = document.getElementById('thoughts-compose-err');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'thoughts-compose-err';
+      el.setAttribute('role', 'status');
+      el.style.cssText = 'padding:8px 16px 0;font-size:13px;color:#c45e28;';
+      var box = document.querySelector('.thoughts-compose');
+      if (box) box.appendChild(el);
+    }
+    el.textContent = msg || '';
+  }
   function maybePost() {
     const input = document.getElementById('thoughts-compose-input');
     const text = (input.value || '').trim();
     if (!text) return;
     const live = fbAuth && fbAuth.currentUser;
-    if (!live) { openAuth('login'); return; }
+    if (!live) { composeErr('Sign in with email to post. Guest can only browse.'); openAuth('login'); return; }
+    if (!fbDb) { composeErr('Feed is not connected.'); return; }
     const parentId = replyTo;
     replyTo = null;
+    composeErr('');
+    const btn = document.getElementById('thoughts-post-btn');
+    btn.disabled = true;
     fbDb.collection('posts').add({
       siteId: SITE_ID,
       parentId: parentId,
       authorUid: live.uid,
-      authorName: currentUser.name,
-      authorHandle: currentUser.handle,
+      authorName: (currentUser && currentUser.name) || live.displayName || 'Member',
+      authorHandle: (currentUser && currentUser.handle) || 'member',
       text: text.slice(0, 280),
       likeCount: 0,
       replyCount: 0,
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     }).then(function () {
+      input.value = '';
+      input.placeholder = input.getAttribute('data-ph') || input.placeholder;
+      btn.disabled = true;
       if (parentId) {
         fbDb.collection('posts').doc(parentId).update({
           replyCount: firebase.firestore.FieldValue.increment(1)
         }).catch(function () {});
       }
     }).catch(function (e) {
+      btn.disabled = false;
+      composeErr((e && e.message) ? e.message : 'Could not post.');
       console.warn('post', e);
     });
-    input.value = '';
-    input.placeholder = input.getAttribute('data-ph') || input.placeholder;
-    document.getElementById('thoughts-post-btn').disabled = true;
   }
 
   /* ── Events ─────────────────────────────────────── */
@@ -770,6 +792,7 @@
   renderNotifs();
   renderThreads();
   renderSidebarAuth();
+  listenLivePosts();
   renderFeed();
 
   window.addEventListener('hashchange', applyRoute);
