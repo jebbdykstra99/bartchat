@@ -557,16 +557,21 @@
     composeErr('');
     return true;
   }
+  let previewObjectUrl = null;
   function setImagePreview(file) {
     if (!acceptImageFile(file)) return;
     attachedFile = file;
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      document.getElementById('compose-preview-img').src = e.target.result;
-      document.getElementById('compose-image-preview').hidden = false;
-      syncPostBtn();
-    };
-    reader.readAsDataURL(file);
+    var img = document.getElementById('compose-preview-img');
+    var box = document.getElementById('compose-image-preview');
+    if (previewObjectUrl) {
+      try { URL.revokeObjectURL(previewObjectUrl); } catch (e) {}
+      previewObjectUrl = null;
+    }
+    previewObjectUrl = URL.createObjectURL(file);
+    img.alt = '';
+    img.src = previewObjectUrl;
+    box.hidden = false;
+    syncPostBtn();
   }
 
   function uploadImage(file, uid) {
@@ -712,6 +717,11 @@
       attachedFile = null;
       document.getElementById('compose-image-preview').hidden = true;
       document.getElementById('compose-preview-img').src = '';
+      document.getElementById('compose-preview-img').alt = '';
+      if (previewObjectUrl) {
+        try { URL.revokeObjectURL(previewObjectUrl); } catch (e2) {}
+        previewObjectUrl = null;
+      }
       if (imgIn) imgIn.value = '';
       if (gifIn) gifIn.value = '';
       syncPostBtn();
