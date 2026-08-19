@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="bartchat">
+  <rect width="32" height="32" rx="7" fill="#101820"/>
+  <!-- tunnel arch -->
+  <path d="M5 27 V15.5 A11 11 0 0 1 27 15.5 V27" fill="none" stroke="#0099d8" stroke-width="1.7" stroke-linecap="round"/>
+  <!-- train body -->
+  <rect x="9" y="12.5" width="14" height="10.5" rx="2.2" fill="#0099d8"/>
+  <!-- windshield -->
+  <rect x="11.2" y="14.2" width="9.6" height="4.2" rx="1" fill="#101820"/>
+  <rect x="12.2" y="15" width="3.2" height="2.6" rx="0.4" fill="#e6e8eb" fill-opacity="0.55"/>
+  <rect x="16.6" y="15" width="3.2" height="2.6" rx="0.4" fill="#e6e8eb" fill-opacity="0.35"/>
+  <!-- headlights -->
+  <circle cx="12.4" cy="21.2" r="1.05" fill="#f4f5f7"/>
+  <circle cx="19.6" cy="21.2" r="1.05" fill="#f4f5f7"/>
+  <!-- rails -->
+  <path d="M8 26.2 H24" stroke="#0077a8" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M10.5 26.2 V28.2 M16 26.2 V28.6 M21.5 26.2 V28.2" stroke="#0077a8" stroke-width="1.15" stroke-linecap="round"/>
+</svg>
