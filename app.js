@@ -7,6 +7,77 @@
   const LS_POSTS = 'bartchat.localPosts';
 
 
+
+  const SITE_ID = 'bartchat';
+  let fbAuth = null;
+  let fbDb = null;
+  let livePosts = [];
+  let replyTo = null;
+  try {
+    firebase.initializeApp({
+    apiKey: "AIzaSyD4CgKQTylEy03Lh9Uhe9UVloyrKaK3bdY",
+    authDomain: "subx-skins.firebaseapp.com",
+    projectId: "subx-skins",
+    storageBucket: "subx-skins.firebasestorage.app",
+    messagingSenderId: "869847405863",
+    appId: "1:869847405863:web:26f902efb9a4ee0b7c0502"
+    });
+    fbAuth = firebase.auth();
+    fbDb = firebase.firestore();
+  } catch (e) { console.warn('subx-skins init', e); }
+
+  function applyFbUser(user) {
+    if (!user) return;
+    const raw = user.displayName || (user.email || 'member').split('@')[0];
+    currentUser = {
+      uid: user.uid,
+      name: raw,
+      handle: String(raw).toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 15) || 'member',
+      bio: '',
+      live: true
+    };
+    saveJSON(LS_USER, currentUser);
+    closeAuth();
+    renderSidebarAuth();
+    syncProfile();
+  }
+  function mapLive(doc) {
+    const d = doc.data() || {};
+    const ms = d.createdAt && d.createdAt.toMillis ? d.createdAt.toMillis() : Date.now();
+    return {
+      id: doc.id,
+      name: d.authorName || 'Member',
+      handle: d.authorHandle || 'member',
+      text: d.text || '',
+      hours: Math.max(0, Math.round((Date.now() - ms) / 3600000)),
+      likes: d.likeCount || 0,
+      replies: d.replyCount || 0,
+      followed: true,
+      parentId: d.parentId || null,
+      live: true
+    };
+  }
+  function listenLivePosts() {
+    if (!fbDb) return;
+    fbDb.collection('posts').where('siteId', '==', SITE_ID).limit(80)
+      .onSnapshot(function (snap) {
+        livePosts = snap.docs.map(mapLive);
+        renderFeed();
+        if (currentUser) syncProfile();
+      }, function (err) { console.warn('posts listen', err); });
+  }
+  if (fbAuth) {
+    fbAuth.onAuthStateChanged(function (user) {
+      if (user) applyFbUser(user);
+      else if (currentUser && currentUser.live) {
+        currentUser = null;
+        saveJSON(LS_USER, null);
+        renderSidebarAuth();
+        syncProfile();
+      }
+    });
+  }
+
   const hamburger = document.getElementById('hamburger');
   const sidebar = document.getElementById('sidebar');
 
@@ -110,7 +181,8 @@
   let activeThread = null;
 
   function allPosts() {
-    return extraPosts.concat(SEED);
+    const liveTop = livePosts.filter(function (p) { return !p.parentId; });
+    return liveTop.concat(extraPosts).concat(SEED);
   }
 
   function isMobileNav() { return window.innerWidth <= MOBILE_NAV_MQ; }
@@ -439,6 +511,7 @@
     syncProfile();
   }
   function signOut() {
+    if (fbAuth && fbAuth.currentUser) fbAuth.signOut();
     currentUser = null;
     saveJSON(LS_USER, null);
     renderSidebarAuth();
@@ -450,22 +523,32 @@
     const input = document.getElementById('thoughts-compose-input');
     const text = (input.value || '').trim();
     if (!text) return;
-    if (!currentUser) { openAuth('login'); return; }
-    extraPosts.unshift({
-      id: 'local-' + Date.now(),
-      name: currentUser.name,
-      handle: currentUser.handle,
+    const live = fbAuth && fbAuth.currentUser;
+    if (!live) { openAuth('login'); return; }
+    const parentId = replyTo;
+    replyTo = null;
+    fbDb.collection('posts').add({
+      siteId: SITE_ID,
+      parentId: parentId,
+      authorUid: live.uid,
+      authorName: currentUser.name,
+      authorHandle: currentUser.handle,
       text: text.slice(0, 280),
-      hours: 0,
-      likes: 0,
-      replies: 0,
-      followed: true
+      likeCount: 0,
+      replyCount: 0,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function () {
+      if (parentId) {
+        fbDb.collection('posts').doc(parentId).update({
+          replyCount: firebase.firestore.FieldValue.increment(1)
+        }).catch(function () {});
+      }
+    }).catch(function (e) {
+      console.warn('post', e);
     });
-    saveJSON(LS_POSTS, extraPosts);
     input.value = '';
+    input.placeholder = input.getAttribute('data-ph') || input.placeholder;
     document.getElementById('thoughts-post-btn').disabled = true;
-    renderFeed();
-    syncProfile();
   }
 
   /* ── Events ─────────────────────────────────────── */
@@ -504,7 +587,18 @@
       syncProfile();
       return;
     }
-    if (e.target.closest('[data-act="reply"]') || e.target.closest('[data-act="share"]')) {
+    if (e.target.closest('[data-act="reply"]')) {
+      if (!(fbAuth && fbAuth.currentUser)) { openAuth('login'); return; }
+      const post = e.target.closest('[data-post-id]');
+      if (!post) return;
+      replyTo = post.dataset.postId;
+      const input = document.getElementById('thoughts-compose-input');
+      if (!input.getAttribute('data-ph')) input.setAttribute('data-ph', input.placeholder);
+      input.placeholder = 'Reply to this post…';
+      input.focus();
+      return;
+    }
+    if (e.target.closest('[data-act="share"]')) {
       if (!currentUser) openAuth('login');
       return;
     }
@@ -607,17 +701,45 @@
     err.classList.add('show');
     setTimeout(function () { stubSignIn('Guest', 'guestbart'); }, 500);
   }
-  document.getElementById('cv-login-btn').addEventListener('click', function () { stubSubmit('cv-login-err'); });
+  document.getElementById('cv-login-btn').addEventListener('click', function () {
+    const err = document.getElementById('cv-login-err');
+    const email = (document.getElementById('cv-login-email').value || '').trim();
+    const pw = document.getElementById('cv-login-pw').value || '';
+    if (!fbAuth) { err.textContent = 'Auth is not ready.'; err.classList.add('show'); return; }
+    err.textContent = '';
+    fbAuth.signInWithEmailAndPassword(email, pw).catch(function (e) {
+      err.textContent = (e && e.message) ? e.message : 'Sign-in failed.';
+      err.classList.add('show');
+    });
+  });
   document.getElementById('cv-reg-btn').addEventListener('click', function () {
-    const name = (document.getElementById('cv-reg-name').value || '').trim() || 'Guest';
     const err = document.getElementById('cv-reg-err');
-    err.textContent = 'Dress rehearsal — no live auth. Local guest only.';
-    err.classList.add('show');
-    setTimeout(function () { stubSignIn(name, name.replace(/\s+/g, '').slice(0, 12)); }, 500);
+    const name = (document.getElementById('cv-reg-name').value || '').trim();
+    const email = (document.getElementById('cv-reg-email').value || '').trim();
+    const pw = document.getElementById('cv-reg-pw').value || '';
+    if (!fbAuth) { err.textContent = 'Auth is not ready.'; err.classList.add('show'); return; }
+    if (!email || pw.length < 6) { err.textContent = 'Email and a password of at least 6 characters.'; err.classList.add('show'); return; }
+    err.textContent = '';
+    fbAuth.createUserWithEmailAndPassword(email, pw).then(function (cred) {
+      const disp = name || email.split('@')[0];
+      return cred.user.updateProfile({ displayName: disp }).then(function () {
+        if (fbDb) {
+          return fbDb.collection('users').doc(cred.user.uid).set({
+            displayName: disp,
+            email: email,
+            siteId: SITE_ID,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true });
+        }
+      });
+    }).catch(function (e) {
+      err.textContent = (e && e.message) ? e.message : 'Could not create account.';
+      err.classList.add('show');
+    });
   });
   document.getElementById('cv-google-login').addEventListener('click', function () {
     var err = document.getElementById('cv-login-err');
-    err.textContent = 'Google sign-in waits on HTTPS and a SubX identity project. Not bakasan.art. Use guest for now.';
+    err.textContent = 'Email and password are live on subx-skins. Google is off until that provider is enabled.';
     err.classList.add('show');
   });
   document.getElementById('cv-guest-login').addEventListener('click', function () { stubSignIn('Guest', 'guestbart'); });
