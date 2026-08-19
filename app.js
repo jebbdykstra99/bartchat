@@ -6,85 +6,93 @@
   const LS_LIKES = 'bartchat.likes';
   const LS_POSTS = 'bartchat.localPosts';
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyA0AGKwIt3jWCdivlb573i19XEDm12zxIE",
+    authDomain: "bakasan-art.firebaseapp.com",
+    projectId: "bakasan-art",
+    storageBucket: "bakasan-art.firebasestorage.app",
+    messagingSenderId: "839964323046",
+    appId: "1:839964323046:web:ef9ddbbef5f64acfc2df27",
+    measurementId: "G-31WPTPSZQW"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const fbAuth = firebase.auth();
+
   const hamburger = document.getElementById('hamburger');
   const sidebar = document.getElementById('sidebar');
 
-  const COLORS = ['#101820', '#0099d8', '#d32f2f', '#0077a8', '#3d4f5c', '#c9a227'];
-
+  const COLORS = ['#101820', '#0099d8', '#0077a8', '#d32f2f', '#2a3d4a', '#4a5c68'];
 
   const TRENDS = [
-    { tag: 'Yellow', headline: 'Major delay through the Tube', snippet: 'Trains single-tracking. Embarcadero to West Oakland is a rumor. Bring a book.', meta: 'Live on the system' },
-    { tag: 'Red', headline: 'Richmond line 22 minutes', snippet: 'Platform packed. Next train is already full. People walking to 19th.', meta: 'Delay' },
-    { tag: 'Elevator', headline: 'Powell elevator out, again', snippet: 'Stroller, bike, wheelchair, everyone taking the stairs. Classic Powell.', meta: 'Station' },
-    { tag: 'Fare gate', headline: 'MacArthur gates jammed', snippet: 'Clipper tap does the sad beep. Agent booth empty. People hopping.', meta: 'Mixup' },
-    { tag: 'Orange', headline: 'Warm platform at Fremont', snippet: 'AC is a myth. Dublin/Pleasanton riders melting. Water bottle mandatory.', meta: 'The system' },
-    { tag: 'Blue', headline: 'Daly City crowd crush at 5:12', snippet: 'Door cycles three times. Someone’s backpack eats a closing door. We wait.', meta: 'Commute' },
-    { tag: 'Green', headline: 'Berryessa skip-stop rumor', snippet: 'Announcements say “this train to Daly City” then it isn’t. Mixup of the hour.', meta: 'Wrong train' },
-    { tag: 'Bike car', headline: 'Bike car is a mosh pit', snippet: 'Four bikes, two scooters, a cargo. Conductor shrugs. This is the bike car now.', meta: 'Rolling' }
+    { tag: 'Delay', headline: 'Yellow line crawling through the Tube', snippet: 'Twenty-two minutes at Embarcadero and counting. People are walking Market instead.', meta: 'Trending on BART' },
+    { tag: 'Mixup', headline: 'Announcements say Richmond, signs say Daly City', snippet: 'Train identity crisis at Montgomery. Half the car got off. Half should have.', meta: 'Platform chatter' },
+    { tag: 'Clipper', headline: 'Fare gates rejecting cards at Powell', snippet: 'Tap, red X, try the next gate. Everyone is doing the same dance.', meta: 'Fare mixup' },
+    { tag: 'Elevator', headline: 'Powell Street elevator out again', snippet: 'Stairs are a contact sport. Strollers and bikes stacking at the landing.', meta: 'Station report' },
+    { tag: 'Last train', headline: 'Millbrae cutoff is a sprint tonight', snippet: 'If you miss this one you are on a bus and a prayer. Platform is already anxious.', meta: 'End of service' },
+    { tag: 'Transfer', headline: 'MacArthur bottleneck on the hour', snippet: 'Three lines, one platform, two announcements that disagree. Classic transfer.', meta: 'Oakland side' },
+    { tag: 'Bike car', headline: 'Scooters in the bike car, bikes in the aisle', snippet: 'The first car is a storage unit. Bring patience, not a frame.', meta: 'Car 1 discourse' },
+    { tag: 'Crush', headline: 'Civic Center packed, next train 12 min', snippet: 'Doors cycling, nobody moving. The following train is not empty either.', meta: 'Peak hour' }
   ];
 
   const PLACES = [
-    { tag: 'Station', title: 'Embarcadero', snippet: 'The choke point. If the Tube coughs, this platform knows first.' },
-    { tag: 'Station', title: 'Montgomery', snippet: 'Financial district pour. Doors open, a thousand lanyards move as one.' },
-    { tag: 'Station', title: 'Powell', snippet: 'Elevators, tourists, and the fare gate that never learned Clipper.' },
-    { tag: 'Station', title: '12th Street / Oakland', snippet: 'Transfer chaos. Richmond vs Berryessa. Pick wrong, ride extra.' },
-    { tag: 'Station', title: 'MacArthur', snippet: 'The hub. Yellow, orange, red, and a speaker that lies.' },
-    { tag: 'Station', title: 'Millbrae', snippet: 'Caltrain handshake. If you miss it, you live here now.' },
-    { tag: 'Station', title: 'Pittsburg/Bay Point', snippet: 'End of the yellow. The wait is the commute.' },
-    { tag: 'Station', title: 'Dublin/Pleasanton', snippet: 'Parking lot the size of a town. Train is 11 minutes. Always.' }
+    { tag: 'Station', title: 'Embarcadero', snippet: 'Transbay Tube mouth. Delays start here and travel both directions.' },
+    { tag: 'Station', title: 'Powell Street', snippet: 'Elevators, fare gates, and the tourist crush on the stairs.' },
+    { tag: 'Station', title: '12th Street Oakland', snippet: 'Transfers, three levels, and announcements that argue with the signs.' },
+    { tag: 'Station', title: 'MacArthur', snippet: 'The bottleneck. Yellow, orange, red — pick a platform and hope.' },
+    { tag: 'Station', title: 'West Oakland', snippet: 'Last stop before the Tube. Trains bunch. Doors stay open too long.' },
+    { tag: 'Station', title: 'Millbrae', snippet: 'Peninsula end of the line. Last-train energy after 11.' },
+    { tag: 'Station', title: 'Civic Center', snippet: 'Peak crush. The next train is always twelve minutes out.' },
+    { tag: 'Station', title: '24th Street Mission', snippet: 'Platform mixups and the train that left while you were on the wrong side.' }
   ];
 
   const TOPICS = [
-    { tag: 'Delay', title: 'The Tube', snippet: 'Transbay. When it stumbles, both sides of the bay sit down.' },
-    { tag: 'Mixup', title: 'Wrong train', snippet: 'Richmond vs Millbrae. The announcement lied. You are going to SFO now.' },
-    { tag: 'Station', title: 'Elevators', snippet: 'Out at Powell, slow at 19th, “temporarily” for three weeks.' },
-    { tag: 'Fares', title: 'Clipper & gates', snippet: 'Sad beep, tag again, tag the other card, miss the train.' },
-    { tag: 'Cars', title: 'Bike car', snippet: 'Bikes, scooters, and a guy with a bass. Nobody is wrong. Everybody is in the way.' },
-    { tag: 'Night', title: 'Last train', snippet: 'You are sprinting. The doors are not sprinting.' }
+    { tag: 'Delay', title: 'Yellow / Orange / Red', snippet: 'Minutes on the board vs. minutes in real life. Bring a book.' },
+    { tag: 'Clipper', title: 'Fare gates & taps', snippet: 'Red X, try the next gate, pretend this is normal.' },
+    { tag: 'Elevators', title: 'Out of service', snippet: 'Powell, 19th, MacArthur — the stairs become the plan.' },
+    { tag: 'Mixup', title: 'Platform changes', snippet: 'Announcements vs. signs vs. the train that actually shows up.' },
+    { tag: 'Last train', title: 'End of service', snippet: 'Millbrae, Richmond, Antioch. Miss it and you are on a night bus.' },
+    { tag: 'Bike car', title: 'Car 1', snippet: 'Bikes, scooters, and the person who sat in the designated space.' }
   ];
 
   const SEED = [
-    { id: 'p1', name: 'Tube Watch', handle: 'tubewatch', text: 'Major delay in the Transbay Tube. They said 10 minutes 25 minutes ago. Embarcadero is a parking lot of humans. I am walking to the ferry. Dummy delay, real energy.', hours: 1, likes: 214, replies: 61, followed: true },
-    { id: 'p2', name: 'Wrong Train Kim', handle: 'richmondnot', text: 'Announcer: this is a Richmond train. Map: Millbrae. Doors closed. I am going to SFO with a grocery bag. Mixup of the day.', hours: 1, likes: 189, replies: 44, followed: true },
-    { id: 'p3', name: 'Powell Stairs', handle: 'powellelev', text: 'Powell elevator out again. Stroller, bike, wheelchair, all of us looking at 3 flights like it is a boss fight. BART, this is not a personality.', hours: 2, likes: 276, replies: 38, followed: false },
-    { id: 'p4', name: 'Gate Beep', handle: 'sadclipper', text: 'MacArthur fare gate did the sad beep four times. Agent booth dark. The person in front hopped. I tagged my other card and missed the orange. Classic.', hours: 2, likes: 97, replies: 22, followed: true },
-    { id: 'p5', name: 'Yellow Wait', handle: 'pittsburgbay', text: 'Pittsburg/Bay Point. Next train 18 minutes. The one after that is 18 minutes. This is the whole yellow line today.', hours: 3, likes: 154, replies: 29, followed: true },
-    { id: 'p6', name: 'Dublin Melt', handle: 'dublinwait', text: 'Dublin/Pleasanton platform is a convection oven. AC in the cars is a rumor. If you brought a jacket you are the problem.', hours: 3, likes: 131, replies: 17, followed: false },
-    { id: 'p7', name: 'Door Cycle', handle: 'dalycrush', text: 'Daly City 5:12. Door cycles three times because a backpack decided to be a citizen. We all sighed in unison. That was the conversation.', hours: 4, likes: 88, replies: 11, followed: true },
-    { id: 'p8', name: 'Bike Car Plus', handle: 'bikecarplus', text: 'Bike car has four bikes, two scooters, a cargo, and a guy with a bass. Conductor looked in, nodded, kept walking. This is the bike car now.', hours: 5, likes: 203, replies: 35, followed: false },
-    { id: 'p9', name: '19th Transfer', handle: 'oakland12th', text: '12th Street Oakland. Thought I wanted Richmond. Boarded Berryessa. Realized at Lake Merritt. Riding it out. Dummy mixup, real 22 extra minutes.', hours: 6, likes: 76, replies: 14, followed: true },
-    { id: 'p10', name: 'Warm Car 3', handle: 'fremontwarm', text: 'Fremont bound, car 3 is a sauna. Car 4 is fine. Nobody will move because we have claimed this pole. Pride is a delay cause.', hours: 7, likes: 64, replies: 9, followed: false },
-    { id: 'p11', name: 'Last Train Sprint', handle: 'lasttrain', text: 'Sprinting down Montgomery for the last Dublin. Doors doing that slow close. Made it. My dignity did not.', hours: 8, likes: 241, replies: 19, followed: true },
-    { id: 'p12', name: 'SFO Mixup', handle: 'notsfo', text: 'Got on a Millbrae thinking SFO. Announcement after Daly City. Now I am in an airport with no flight. BART humor.', hours: 9, likes: 118, replies: 27, followed: false },
-    { id: 'p13', name: 'West Oakland Hold', handle: 'wohhold', text: 'Holding at West Oakland “briefly.” Brief is 14 minutes. The Tube is thinking about its life.', hours: 10, likes: 92, replies: 16, followed: true },
-    { id: 'p14', name: 'Ashby Elevator', handle: 'ashbylift', text: 'Ashby elevator smells like a science fair. Still better than Powell being out. Low bar, we clear it.', hours: 11, likes: 55, replies: 7, followed: false },
-    { id: 'p15', name: 'Concord Skip', handle: 'concordskip', text: 'This train to Pittsburg is skipping Concord. Announced after the doors closed. Half the car made a noise I will not try to spell.', hours: 12, likes: 167, replies: 33, followed: true },
-    { id: 'p16', name: 'Balboa Park', handle: 'balboagate', text: 'Balboa Park gates ate my transfer. Muni to BART, one system two beep languages. I am late to a dummy job.', hours: 14, likes: 71, replies: 12, followed: true },
-    { id: 'p17', name: 'Coliseum Night', handle: 'coliseumowl', text: 'Coliseum at 11:40. Platform empty except me and a racoon energy. Next train 19 minutes. Night BART is a genre.', hours: 16, likes: 83, replies: 8, followed: false },
-    { id: 'p18', name: 'El Cerrito del Norte', handle: 'delnorte', text: 'Del Norte parking is a blood sport. Train is on time for once and I am still in row 47. The delay was me.', hours: 18, likes: 109, replies: 15, followed: true },
-    { id: 'p19', name: 'Walnut Creek', handle: 'wcplatform', text: 'Walnut Creek. Someone asked if this yellow goes to SFO. Three people answered three different things. All of us were a little right.', hours: 20, likes: 144, replies: 41, followed: false },
-    { id: 'p20', name: 'Civic Center', handle: 'civicbeep', text: 'Civic Center fare gate let six people through on one tap. The seventh got the sad beep. That seventh was me. Of course.', hours: 22, likes: 198, replies: 24, followed: true }
+    { id: 'p1', name: 'Pittsburg Bay', handle: 'pittsburgbay', text: 'Boarded at MacArthur thinking Millbrae. Doors closed. Richmond. The map on the car still said yellow. I am in El Cerrito energy and I have a meeting at Montgomery.', hours: 1, likes: 318, replies: 52, followed: true, snippet: { handle: 'millbraemix', text: 'This is a weekly sport. Look at the destination before you sit.' } },
+    { id: 'p2', name: 'Dublin Wait', handle: 'dublinwait', text: 'Dublin/Pleasanton showing 22 minutes. Platform is a parking lot of people checking the app that is also lying. If you are still at West Dublin, stay on the bus.', hours: 2, likes: 241, replies: 38, followed: true },
+    { id: 'p3', name: 'Tube Rider', handle: 'transbaytube', text: 'Transbay Tube, no bars, AC doing a rumor. We have been between West Oakland and Embarcadero long enough to learn the emergency sticker by heart.', hours: 3, likes: 189, replies: 27, followed: true, snippet: { handle: 'embarcdelay', text: 'Same train. I counted the lights.' } },
+    { id: 'p4', name: 'Powell Up', handle: 'powellup', text: 'Powell St elevator out. Again. Two flights of stairs with a suitcase and a stroller traffic jam. This is not a surprise. It is a lifestyle.', hours: 4, likes: 276, replies: 41, followed: false },
+    { id: 'p5', name: 'Gate Jam', handle: 'gatejam', text: 'Montgomery fare gate ate my Clipper, flashed red, then jammed open for everyone behind me. Agent booth empty. Honor system with extra steps.', hours: 5, likes: 154, replies: 22, followed: true },
+    { id: 'p6', name: 'Bike Car West', handle: 'bikecarwest', text: 'Bike car on the Dublin train was a wall of handlebars. I skipped two trains. If you bring a cargo bike at 5:15 you are the delay.', hours: 6, likes: 97, replies: 19, followed: false, snippet: { handle: 'dublinwait', text: 'Saw you on the platform. The next one was worse.' } },
+    { id: 'p7', name: 'Platform Heat', handle: 'platformheat', text: 'Concord platform in August is a griddle. No shade, no breeze, the arriving train is also warm. Warm-platform summer is undefeated.', hours: 7, likes: 203, replies: 16, followed: true },
+    { id: 'p8', name: 'Millbrae Mix', handle: 'millbraemix', text: 'Richmond vs Millbrae is not a mixup, it is a trap. Same platform, opposite lives. I now photograph the headsign like a crime scene.', hours: 8, likes: 412, replies: 67, followed: true, snippet: { handle: 'pittsburgbay', text: 'I did this today. We are a support group.' } },
+    { id: 'p9', name: 'Antioch End', handle: 'antiochend', text: 'Yellow line crawled from Pittsburg Center like it owed the rails money. Four stops. Twenty-eight minutes. I could have walked the highway faster and I would not have.', hours: 9, likes: 88, replies: 11, followed: false },
+    { id: 'p10', name: '19th Wait', handle: '19thwait', text: '19th St Oakland is shoulder-to-shoulder and the next Richmond is “arriving” for the third time. If you hear the tones, do not celebrate yet.', hours: 11, likes: 131, replies: 18, followed: true },
+    { id: 'p11', name: 'Colma Skip', handle: 'colmaskip', text: 'Train skipped Colma without a word. Platform full of people who had already tagged in. Someone yelled at the operator through a closed door. Fair.', hours: 13, likes: 176, replies: 29, followed: false },
+    { id: 'p12', name: 'SFO Air', handle: 'sfoairbart', text: 'SFO station is not the terminal. It is a walk, an elevator lottery, and a family arguing with a fare machine. Budget forty minutes or miss the flight.', hours: 15, likes: 220, replies: 34, followed: true },
+    { id: 'p13', name: 'Warm Springs', handle: 'warmspringsend', text: 'Green line to Warm Springs saying 18 min, then 12, then 18 again. Berryessa people are sitting on the floor like this is a delayed flight.', hours: 16, likes: 74, replies: 8, followed: false },
+    { id: 'p14', name: 'Civic Gate', handle: 'civicgate', text: 'Civic Center fare gates are eating Clipper cards and coughing them back. I tapped three times. The fourth was a jump. Not proud. Not sorry.', hours: 18, likes: 109, replies: 21, followed: true, snippet: { handle: 'gatejam', text: 'Montgomery did the same thing an hour ago.' } },
+    { id: 'p15', name: 'Lake Merritt Up', handle: 'lakemerrittup', text: 'Lake Merritt elevator smells like a science project and one of the two is out. Stairs it is. My knees have opinions.', hours: 20, likes: 61, replies: 7, followed: false },
+    { id: 'p16', name: 'West Oak Jump', handle: 'westoakjump', text: 'West Oakland transfer is a stampede if the Dublin train and the Tube train hit at once. I lost a shoe. I found the shoe. I missed the train.', hours: 22, likes: 198, replies: 24, followed: true },
+    { id: 'p17', name: 'Berryessa Clock', handle: 'berryessawait', text: 'Berryessa platform clock is seven minutes fast or the train is seven minutes slow. Either way I am lying to my calendar.', hours: 24, likes: 55, replies: 6, followed: false },
+    { id: 'p18', name: 'Embarc Delay', handle: 'embarcdelay', text: 'Embarcadero bottleneck. Three lines, one platform mood. Someone is eating chips like we are not in a metal tube under Market.', hours: 26, likes: 147, replies: 31, followed: true, snippet: { handle: 'transbaytube', text: 'That was me. Salt and vinegar. No regrets.' } },
+    { id: 'p19', name: 'Fremont Car', handle: 'fremontcar', text: 'Fremont train with no AC and every window locked. Warm-platform summer followed us into the car. I am a melted Clipper card.', hours: 28, likes: 92, replies: 13, followed: false },
+    { id: 'p20', name: 'North Berk Lift', handle: 'nberkelevator', text: 'North Berkeley elevator out since Tuesday if the handwritten sign is telling the truth. The other sign says “temporarily.” It is Friday.', hours: 30, likes: 83, replies: 9, followed: true },
+    { id: 'p21', name: 'MacArthur Mix', handle: 'macarthurmix', text: 'MacArthur is where the colors lie. I watched six people board Richmond with Millbrae faces. I said something. They did not get off. See you in El Cerrito.', hours: 32, likes: 267, replies: 44, followed: true },
+    { id: 'p22', name: 'Daly City End', handle: 'dalycityend', text: 'Daly City turnback. Train sat with doors open for twelve minutes while the operator argued with the radio. At least we were above ground.', hours: 36, likes: 70, replies: 10, followed: false }
   ];
 
   const NOTIFS = [
-    { id: 'n1', text: '@tubewatch liked your Tube delay post.', time: '12m', unread: true },
-    { id: 'n2', text: '@richmondnot mentioned you on a wrong-train mixup.', time: '1h', unread: true },
-    { id: 'n3', text: '@powellelev started following you. Dummy follow.', time: '3h', unread: true },
-    { id: 'n4', text: 'Major delay alert: Transbay Tube (dummy).', time: '4h', unread: false }
+    { id: 'n1', text: '@millbraemix liked your take on the Richmond vs Millbrae trap.', time: '1h', unread: true },
+    { id: 'n2', text: '@transbaytube mentioned you in a Tube delay check.', time: '3h', unread: true },
+    { id: 'n3', text: '@macarthurmix started following you. Dummy follow.', time: 'Yesterday', unread: true }
   ];
 
   const THREADS = [
-    { id: 't1', name: 'Tube Watch', handle: 'tubewatch', preview: 'Are you still in the Tube hold?', messages: [
-      { me: false, text: 'Are you still in the Tube hold?' },
-      { me: true, text: 'Walked to the ferry. Dummy delay, real blister.' }
+    { id: 't1', name: 'Millbrae Mix', handle: 'millbraemix', preview: 'Did you photograph the headsign too?', messages: [
+      { me: false, text: 'Did you photograph the headsign too?' },
+      { me: true, text: 'Every time. Richmond vs Millbrae is a trap. See you on the next one.' }
     ]},
-    { id: 't2', name: 'Wrong Train Kim', handle: 'richmondnot', preview: 'Did you get off at Millbrae?', messages: [
-      { me: false, text: 'Did you get off at Millbrae?' },
-      { me: true, text: 'Rode it to SFO to commit to the bit.' }
-    ]},
-    { id: 't3', name: 'Powell Stairs', handle: 'powellelev', preview: 'Elevator still out. Stairs it is.', messages: [
-      { me: false, text: 'Elevator still out. Stairs it is.' },
-      { me: true, text: 'Meet at the fare gates. Bring knees.' }
+    { id: 't2', name: 'Tube Rider', handle: 'transbaytube', preview: 'Still in the Tube. You?', messages: [
+      { me: false, text: 'Still in the Tube. You?' },
+      { me: true, text: 'West Oakland. If this door closes I owe you a coffee.' }
     ]}
   ];
 
@@ -227,6 +235,9 @@
             '<span class="post-time">· ' + (post.hours != null ? post.hours + 'h' : 'now') + '</span>' +
           '</div>' +
           '<p class="post-text">' + escapeHtml(post.text) + '</p>' +
+          (post.snippet
+            ? '<div class="post-snippet"><span class="post-snippet-handle">@' + escapeHtml(post.snippet.handle) + '</span>' + escapeHtml(post.snippet.text) + '</div>'
+            : '') +
           '<div class="post-actions">' +
             '<button class="post-action" data-act="reply" type="button">Reply · ' + (post.replies || 0) + '</button>' +
             '<button class="post-action' + (liked ? ' liked' : '') + '" data-act="like" type="button">Like · ' + likeCount + '</button>' +
@@ -243,15 +254,35 @@
     });
   }
 
+  function sliceFeed(posts, tab) {
+    var list = posts.slice();
+    if (tab === 'following') {
+      return list.filter(function (p) {
+        return p.followed || (currentUser && p.handle === currentUser.handle);
+      });
+    }
+    if (tab === 'hot') {
+      return list.sort(function (a, b) {
+        return (b.likes + (likes[b.id] ? 1 : 0)) - (a.likes + (likes[a.id] ? 1 : 0));
+      });
+    }
+    if (tab === 'new') {
+      return list.sort(function (a, b) { return (a.hours || 0) - (b.hours || 0); });
+    }
+    // For You: conversation-weighted mix (replies + recency), not pure likes or clock order
+    return list.sort(function (a, b) {
+      var sa = (a.replies || 0) * 4 - (a.hours || 0);
+      var sb = (b.replies || 0) * 4 - (b.hours || 0);
+      return sb - sa;
+    });
+  }
+
   function renderFeed() {
     const el = document.getElementById('thoughts-feed');
     if (!el) return;
-    let posts = allPosts().slice();
-    if (currentTab === 'following') posts = posts.filter(function (p) { return p.followed || (currentUser && p.handle === currentUser.handle); });
-    if (currentTab === 'hot') posts.sort(function (a, b) { return (b.likes + (likes[b.id] ? 1 : 0)) - (a.likes + (likes[a.id] ? 1 : 0)); });
-    if (currentTab === 'new') posts.sort(function (a, b) { return (a.hours || 0) - (b.hours || 0); });
+    var posts = sliceFeed(allPosts(), currentTab);
     if (!posts.length) {
-      el.innerHTML = '<div class="post-empty">No posts in this ranking yet. Following / Hot / New are UI chrome — dress rehearsal only.</div>';
+      el.innerHTML = '<div class="post-empty">No posts in this ranking yet. Following / Hot / New are different slices of the same BART feed — dress rehearsal only.</div>';
       return;
     }
     el.innerHTML = posts.map(renderPost).join('');
@@ -364,11 +395,11 @@
     document.getElementById('profile-display-name').textContent = currentUser.name;
     document.getElementById('profile-handle').textContent = '@' + currentUser.handle;
     document.getElementById('profile-avatar').textContent = initials(currentUser.name);
-    document.getElementById('profile-bio').textContent = currentUser.bio || 'Talking about the city.';
+    document.getElementById('profile-bio').textContent = currentUser.bio || 'Nothing but BART.';
     const mine = allPosts().filter(function (p) { return p.handle === currentUser.handle; });
     const pane = document.getElementById('profile-pane-posts');
     if (!mine.length) {
-      pane.innerHTML = '<div class="empty-note" id="profile-posts-empty">No posts yet. Hit Post when something about the city is on your mind.</div>';
+      pane.innerHTML = '<div class="empty-note" id="profile-posts-empty">No posts yet. Hit Post when the train is late again.</div>';
     } else {
       pane.innerHTML = mine.map(renderPost).join('');
     }
@@ -388,7 +419,7 @@
       av.style.background = colorFor(currentUser.handle);
     } else {
       el.innerHTML = '<button class="sidebar-auth-btn primary" id="auth-signin" type="button">Sign in</button>';
-      av.textContent = 'BART';
+      av.textContent = 'BC';
       av.style.background = '';
     }
   }
@@ -410,8 +441,8 @@
   function stubSignIn(name, handle) {
     currentUser = {
       name: name || 'Guest',
-      handle: (handle || 'guestBART').replace(/^@/, '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 15) || 'guestBART',
-      bio: 'BART, talking.'
+      handle: (handle || 'guestbart').replace(/^@/, '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 15) || 'guestbart',
+      bio: 'Nothing but BART.'
     };
     saveJSON(LS_USER, currentUser);
     closeAuth();
@@ -421,9 +452,28 @@
   function signOut() {
     currentUser = null;
     saveJSON(LS_USER, null);
+    if (fbAuth.currentUser) fbAuth.signOut();
     renderSidebarAuth();
     syncProfile();
   }
+
+  function applyFirebaseUser(user) {
+    var emailLocal = (user.email || '').split('@')[0];
+    var name = user.displayName || emailLocal || 'Member';
+    var handle = (emailLocal || name).replace(/^@/, '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 15) || 'member';
+    currentUser = {
+      name: name,
+      handle: handle,
+      bio: 'Nothing but BART.'
+    };
+    saveJSON(LS_USER, currentUser);
+    renderSidebarAuth();
+    syncProfile();
+    closeAuth();
+  }
+  fbAuth.onAuthStateChanged(function (user) {
+    if (user) applyFirebaseUser(user);
+  });
 
   function maybePost() {
     const input = document.getElementById('thoughts-compose-input');
@@ -584,7 +634,7 @@
     const err = document.getElementById(errId);
     err.textContent = 'Dress rehearsal — no live auth. Continuing as guest.';
     err.classList.add('show');
-    setTimeout(function () { stubSignIn('Guest', 'guestBART'); }, 500);
+    setTimeout(function () { stubSignIn('Guest', 'guestbart'); }, 500);
   }
   document.getElementById('cv-login-btn').addEventListener('click', function () { stubSubmit('cv-login-err'); });
   document.getElementById('cv-reg-btn').addEventListener('click', function () {
@@ -594,7 +644,16 @@
     err.classList.add('show');
     setTimeout(function () { stubSignIn(name, name.replace(/\s+/g, '').slice(0, 12)); }, 500);
   });
-  document.getElementById('cv-google-login').addEventListener('click', function () { stubSignIn('Guest', 'guestBART'); });
+  document.getElementById('cv-google-login').addEventListener('click', function () {
+    var err = document.getElementById('cv-login-err');
+    err.classList.remove('show');
+    var gProvider = new firebase.auth.GoogleAuthProvider();
+    fbAuth.signInWithPopup(gProvider).catch(function (e) {
+      err.textContent = e.message || String(e);
+      err.classList.add('show');
+    });
+  });
+  document.getElementById('cv-guest-login').addEventListener('click', function () { stubSignIn('Guest', 'guestbart'); });
 
   const search = document.getElementById('explore-search-input');
   search.addEventListener('input', function () {
@@ -606,7 +665,7 @@
       });
     }
     function cards(list) {
-      if (!list.length) return '<p class="empty-note">Nothing in the system matched that.</p>';
+      if (!list.length) return '<p class="empty-note">Nothing on BART matched that.</p>';
       return list.map(function (c) {
         return '<article class="explore-card"><div class="explore-card-tag">' + escapeHtml(c.tag) +
           '</div><div class="explore-card-title">' + escapeHtml(c.title) +
