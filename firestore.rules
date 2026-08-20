@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function factorySite(data) {
+      return data.siteId in ['samochat', 'bartchat'];
+    }
+    function hasPostBody(data) {
+      return (data.text is string && data.text.size() > 0)
+        || (data.keys().hasAll(['imageUrl']) && data.imageUrl is string && data.imageUrl.size() > 0)
+        || (data.keys().hasAll(['poll']) && data.poll is map);
+    }
+    function onlyReplyCountBump() {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['replyCount'])
+        && request.resource.data.replyCount is int
+        && request.resource.data.replyCount == (resource.data.replyCount is int ? resource.data.replyCount : 0) + 1;
+    }
+    function onlyOwnPollVote() {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['poll'])
+        && request.resource.data.poll.diff(resource.data.poll).affectedKeys().hasOnly(['votes'])
+        && request.resource.data.poll.votes.diff(resource.data.poll.votes).affectedKeys().hasOnly([request.auth.uid])
+        && request.resource.data.poll.votes[request.auth.uid] is int;
+    }
+
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if signedIn()
+        && request.auth.uid == request.resource.data.authorUid
+        && factorySite(request.resource.data)
+        && hasPostBody(request.resource.data);
+      allow delete: if signedIn()
+        && resource.data.authorUid == request.auth.uid;
+      allow update: if signedIn() && (
+        onlyReplyCountBump()
+        || onlyOwnPollVote()
+      );
+    }
+
+    match /users/{uid} {
+      allow read: if true;
+      allow create, update: if signedIn()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasAll(['siteId'])
+        && factorySite(request.resource.data);
+    }
+  }
+}

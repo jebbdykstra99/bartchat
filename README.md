@@ -2,9 +2,9 @@
 
 Nothing but BART. A feed of complaints, delays, and mixups — riders talking about the trains. **Not official BART.**
 
-This is a **static** dress rehearsal of the SubX chrome (three-column X-like shell: left nav, center feed, right rail, hash routes, sign-in modal that closes, mobile hamburger). It is **not** the FastAPI / Next `subx` stack. No React, no Next, no FastAPI, no Firebase, no model calls.
+Static GitHub Pages shell (`index.html` + `styles.css` + `factory.js` + `site.json`) on Firebase project **subx-skins**. Not the FastAPI / Next `subx` stack. Not bakasan-art.
 
-Wordmark: **bartchat**. Tagline: *Nothing but BART.*
+Wordmark: **bartchat**. Tagline: *Nothing but BART.* `SITE_ID` is `bartchat`. Guest handle: `guestbart`.
 
 ## GitHub Pages + custom domain
 
@@ -21,9 +21,16 @@ These files are meant to drop into an empty public repo and be served from GitHu
 
 Until DNS is pointed, Pages will serve on the github.io URL only if the repo is project-pages configured; for the custom domain, use a user/org Pages root as above.
 
-## What this is / is not
+## Factory files
 
-- Feed-first dummy posts about BART (delays, Clipper mixups, platform swaps, last train, elevators). Fake handles only. Not official BART.
-- Ranking chrome (For You / Following / Hot / New) shows different slices of the seed feed.
-- Sign-in modal closes (X, Escape, overlay click); auth is stubbed locally. No Firebase project keys.
-- No AskAI. No cross-post to X or Reddit. We are not X.com.
+- `site.json` — siteId, name, tagline, BART theme tokens, right-rail trends, stations/topics, sample seed/notifs/threads (sample copy is **not** mixed into the live feed)
+- `factory.js` — Auth email/password, live posts (`siteId==bartchat` orderBy `createdAt` desc limit 80), image upload, poll, reply, delete, empty-state
+- `firestore.rules`, `storage.rules`, `firebase.indexes.json`, `RULES.md` — source of truth; publish in the Firebase console for **subx-skins**. Do not `firebase deploy` from an agent.
+
+## Product locks
+
+- Guest is browse-only. Google provider stays off until enabled.
+- Images `image/*` ≤ 5 MB. GIF is a user-uploaded `.gif`, not Tenor.
+- AI off the hot path. No Reddit/X ingest.
+- Preview banner and `robots.txt` noindex stay until Jebb lifts them.
+- Not official BART. Not X.com.
