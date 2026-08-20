@@ -738,15 +738,19 @@
     if (btn) btn.disabled = !(text || attachedFile || pollReady);
   }
 
-  function acceptImageFile(file) {
-    if (!file) return false;
-    if (!file.type || file.type.indexOf('image/') !== 0) { composeErr('Images only. No video.'); return false; }
-    if (file.size > 5 * 1024 * 1024) { composeErr('Max 5 MB.'); return false; }
-    composeErr('');
-    return true;
+  var MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+  function isVideoFile(file) {
+    var t = (file.type || '').toLowerCase();
+    if (t.indexOf('video/') === 0) return true;
+    return /\.(mp4|mov|m4v|webm|avi|mkv)$/i.test(file.name || '');
   }
-  function setImagePreview(file) {
-    if (!acceptImageFile(file)) return;
+  function isProbablyImage(file) {
+    var t = (file.type || '').toLowerCase();
+    if (t.indexOf('image/') === 0) return true;
+    if (isVideoFile(file)) return false;
+    return /\.(jpe?g|png|gif|webp|heic|heif|bmp)$/i.test(file.name || '');
+  }
+  function showAttachedImage(file) {
     attachedFile = file;
     var img = document.getElementById('compose-preview-img');
     var box = document.getElementById('compose-image-preview');
@@ -755,10 +759,85 @@
       previewObjectUrl = null;
     }
     previewObjectUrl = URL.createObjectURL(file);
-    img.alt = '';
-    img.src = previewObjectUrl;
-    box.hidden = false;
+    if (img) {
+      img.alt = '';
+      img.src = previewObjectUrl;
+    }
+    if (box) box.hidden = false;
     syncPostBtn();
+  }
+  function loadImageElement(file) {
+    return new Promise(function (resolve, reject) {
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = function () {
+        URL.revokeObjectURL(url);
+        resolve(img);
+      };
+      img.onerror = function () {
+        URL.revokeObjectURL(url);
+        reject(new Error('Could not read that image. Try JPEG or PNG.'));
+      };
+      img.src = url;
+    });
+  }
+  function jpegFromImage(img, maxEdge, quality) {
+    var w = img.naturalWidth || img.width;
+    var h = img.naturalHeight || img.height;
+    if (!w || !h) return Promise.reject(new Error('Could not read that image.'));
+    var scale = Math.min(1, maxEdge / Math.max(w, h));
+    var cw = Math.max(1, Math.round(w * scale));
+    var ch = Math.max(1, Math.round(h * scale));
+    var canvas = document.createElement('canvas');
+    canvas.width = cw;
+    canvas.height = ch;
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, cw, ch);
+    ctx.drawImage(img, 0, 0, cw, ch);
+    return new Promise(function (resolve, reject) {
+      canvas.toBlob(function (blob) {
+        if (!blob) { reject(new Error('Could not shrink that image.')); return; }
+        resolve(new File([blob], 'photo.jpg', { type: 'image/jpeg' }));
+      }, 'image/jpeg', quality);
+    });
+  }
+  function fitImageUnderLimit(file) {
+    var readyTypes = { 'image/jpeg': 1, 'image/png': 1, 'image/gif': 1, 'image/webp': 1 };
+    if (file.size <= MAX_IMAGE_BYTES && file.type && readyTypes[file.type]) {
+      return Promise.resolve(file);
+    }
+    return loadImageElement(file).then(function (img) {
+      var edge = 1920;
+      var q = 0.82;
+      function attempt() {
+        return jpegFromImage(img, edge, q).then(function (out) {
+          if (out.size <= MAX_IMAGE_BYTES) return out;
+          if (q > 0.5) { q = Math.round((q - 0.12) * 100) / 100; return attempt(); }
+          if (edge > 640) { edge = Math.round(edge * 0.7); q = 0.74; return attempt(); }
+          return Promise.reject(new Error('Could not get that photo under 5 MB.'));
+        });
+      }
+      return attempt();
+    });
+  }
+  function setImagePreview(file) {
+    if (!file) return;
+    if (isVideoFile(file)) {
+      composeErr('Images only. No video yet.');
+      return;
+    }
+    if (!isProbablyImage(file)) {
+      composeErr('Images only. No video.');
+      return;
+    }
+    composeErr(file.size > MAX_IMAGE_BYTES ? 'Shrinking photo…' : '');
+    fitImageUnderLimit(file).then(function (ready) {
+      composeErr('');
+      showAttachedImage(ready);
+    }).catch(function (e) {
+      composeErr((e && e.message) ? e.message : 'Could not attach that photo.');
+    });
   }
 
   function uploadImage(file, uid) {
