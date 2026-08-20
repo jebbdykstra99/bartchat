@@ -1070,8 +1070,40 @@
     });
     document.getElementById('cv-google-login').addEventListener('click', function () {
       var err = document.getElementById('cv-login-err');
-      err.textContent = 'Email and password are live on subx-skins. Google is off until that provider is enabled.';
-      err.classList.add('show');
+      if (!fbAuth) { err.textContent = 'Auth is not ready.'; err.classList.add('show'); return; }
+      var age = document.getElementById('cv-google-age');
+      if (!age || !age.checked) {
+        err.textContent = 'Confirm you are 13 or older and agree to the preview Terms and Privacy pages.';
+        err.classList.add('show');
+        return;
+      }
+      err.textContent = '';
+      err.classList.remove('show');
+      var provider = new firebase.auth.GoogleAuthProvider();
+      fbAuth.signInWithPopup(provider).then(function (cred) {
+        var u = cred && cred.user;
+        if (fbDb && u) {
+          var disp = u.displayName || (u.email || 'member').split('@')[0];
+          return fbDb.collection('users').doc(u.uid).set({
+            displayName: disp,
+            email: u.email || '',
+            siteId: SITE_ID,
+            provider: 'google',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true });
+        }
+      }).catch(function (e) {
+        var msg;
+        if (e && e.code === 'auth/operation-not-allowed') {
+          msg = 'Google is not enabled on subx-skins yet.';
+        } else if (e && e.code === 'auth/popup-closed-by-user') {
+          msg = 'Google sign-in cancelled.';
+        } else {
+          msg = (e && e.message) ? e.message : 'Google sign-in failed.';
+        }
+        err.textContent = msg;
+        err.classList.add('show');
+      });
     });
     document.getElementById('cv-guest-login').addEventListener('click', function () { stubSignIn('Guest', 'guestbart'); });
 
