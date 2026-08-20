@@ -354,6 +354,7 @@ body.right-collapsed .right-panel-tab svg { transform: scaleX(1); }
   outline: 2px dashed var(--accent);
   outline-offset: -4px;
 }
+.compose-image-preview[hidden] { display: none !important; }
 .compose-image-preview {
   position: relative;
   margin: 0.5rem 0 0.3rem 3.3rem;
