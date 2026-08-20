@@ -40,6 +40,9 @@
     fbAuth = firebase.auth();
     fbDb = firebase.firestore();
     fbStorage = firebase.storage();
+    try {
+      firebase.appCheck().activate('6LffWZAtAAAAAGAXCR6JcwiXEY5FnowtegOLmElk', true);
+    } catch (e2) { console.warn('app-check', e2); }
   } catch (e) { console.warn('subx-skins init', e); }
 
   const hamburger = document.getElementById('hamburger');
