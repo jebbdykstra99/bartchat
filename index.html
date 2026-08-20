@@ -19,7 +19,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="preload" href="site.json" as="fetch" crossorigin="anonymous">
 </head>
 <body>
 <div class="preview-banner" role="status">Preview only. Accounts are not open.</div>
@@ -65,7 +66,7 @@
         </a>
       </li>
       <li>
-        <a href="#following" class="nav-social-link" id="nav-following" data-social="following">
+        <a href="#following" class="nav-social-link" id="nav-following" data-social="following" data-soon>
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           Following
         </a>
@@ -77,14 +78,14 @@
         </a>
       </li>
       <li>
-        <a href="#notifications" class="nav-social-link" id="nav-notifications" data-social="notifications">
+        <a href="#notifications" class="nav-social-link" id="nav-notifications" data-social="notifications" data-soon>
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
           Notifications
-          <span class="nav-badge visible" id="notif-badge">3</span>
+          <span class="nav-badge" id="notif-badge" hidden></span>
         </a>
       </li>
       <li>
-        <a href="#chat" class="nav-social-link" id="nav-chat" data-social="chat">
+        <a href="#chat" class="nav-social-link" id="nav-chat" data-social="chat" data-soon>
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           Chat
         </a>
@@ -110,9 +111,9 @@
     <div class="sidebar-auth" id="sidebar-auth"></div>
 
     <div class="nav-legal">
-      <span>Dress rehearsal</span>
+      <a href="terms.html">Terms</a>
       <span>&middot;</span>
-      <span>Not X.com</span>
+      <a href="privacy.html">Privacy</a>
       <span>&middot;</span>
       <span>Not official BART</span>
     </div>
@@ -125,7 +126,7 @@
   <section class="page active" id="page-thoughts">
     <div class="thoughts-tabs" role="tablist">
       <button class="thoughts-tab active" data-thoughts-tab="foryou" role="tab">For You</button>
-      <button class="thoughts-tab" data-thoughts-tab="following" role="tab">Following</button>
+      <button class="thoughts-tab" data-thoughts-tab="following" role="tab">Following <span class="tab-soon">Soon</span></button>
       <button class="thoughts-tab" data-thoughts-tab="hot" role="tab">Hot</button>
       <button class="thoughts-tab" data-thoughts-tab="new" role="tab">New</button>
     </div>
@@ -203,7 +204,7 @@
   </div>
   <div class="profile-signin-prompt" id="profile-signin-prompt">
     <h2>See your BART profile</h2>
-    <p>Sign in to set a handle and post about the trains. This dress rehearsal uses a local stub — no live accounts. Not official BART.</p>
+    <p>Sign in with email to set a handle and post about the trains. Guest is browse-only. Google is off until that provider is enabled. Not official BART.</p>
     <button class="accent-btn" id="profile-signin-prompt-btn" type="button">Sign in</button>
   </div>
   <div class="profile-content" id="profile-content" hidden>
@@ -218,8 +219,8 @@
       <p class="profile-bio" id="profile-bio">Just riding. Nothing but BART.</p>
       <div class="profile-meta" id="profile-meta">Bay Area Rapid Transit — unofficial</div>
       <div class="profile-counts">
-        <button type="button" class="count-btn"><strong>12</strong> Following</button>
-        <button type="button" class="count-btn"><strong>4</strong> Followers</button>
+        <button type="button" class="count-btn" disabled><strong>—</strong> Following <span class="tab-soon">Soon</span></button>
+        <button type="button" class="count-btn" disabled><strong>—</strong> Followers <span class="tab-soon">Soon</span></button>
       </div>
     </div>
     <div class="profile-posts" id="profile-pane-posts">
@@ -234,7 +235,7 @@
     <div class="chat-threads-header">
       <div class="chat-threads-title-row">
         <div class="chat-threads-title">Chat</div>
-        <button class="chat-new-btn" id="chat-new-btn" type="button" title="New chat">New</button>
+        <button class="chat-new-btn" id="chat-new-btn" type="button" title="DMs coming soon" disabled>Soon</button>
       </div>
       <div class="chat-search-bar">
         <input type="text" class="chat-search-input" id="chat-search-input" placeholder="Search chats" autocomplete="off">
@@ -244,9 +245,9 @@
   </div>
   <div class="chat-active-pane" id="chat-active-pane">
     <div class="chat-placeholder" id="chat-placeholder">
-      <div class="chat-placeholder-title">Platform DMs</div>
-      <div class="chat-placeholder-sub">Pick a thread, or start a new one. Messages stay on this device — dress rehearsal only, no live backend. Not official BART.</div>
-      <button class="accent-btn" id="chat-placeholder-new" type="button">New chat</button>
+      <div class="chat-placeholder-title">Chat — Soon</div>
+      <div class="chat-placeholder-sub">Direct messages are not live in this preview. No DMs graph. Sample thread copy in site.json is not a real inbox. Not official BART.</div>
+      <button class="accent-btn" id="chat-placeholder-new" type="button" disabled>Soon</button>
     </div>
     <div class="chat-thread-view" id="chat-thread-view" hidden>
       <div class="chat-thread-header">
@@ -255,7 +256,7 @@
       <div class="chat-messages" id="chat-messages"></div>
       <div class="chat-compose">
         <textarea class="chat-compose-input" id="chat-compose-input" placeholder="Message about the trains…" rows="1"></textarea>
-        <button class="chat-send-btn" id="chat-send-btn" type="button">Send</button>
+        <button class="chat-send-btn" id="chat-send-btn" type="button" disabled>Soon</button>
       </div>
     </div>
   </div>
@@ -267,7 +268,7 @@
   <div class="notif-header">
     <div class="notif-header-row">
       <div class="notif-title">Notifications</div>
-      <button class="ghost-btn" id="notif-mark-read" type="button">Mark all read</button>
+      <button class="ghost-btn" id="notif-mark-read" type="button" disabled>Soon</button>
     </div>
     <div class="thoughts-tabs notif-tabs">
       <button class="thoughts-tab active" data-notif-tab="all">All</button>
@@ -312,12 +313,12 @@
   </svg>
 </button>
 
-<!-- ── Sign-in modal (Firebase Auth Google + local guest) ─ -->
+<!-- ── Sign-in modal (Firebase Auth email/password + local guest) ─ -->
 <div class="conv-modal-overlay" id="cv-auth-overlay" role="dialog" aria-modal="true" aria-labelledby="auth-title">
   <div class="conv-modal">
     <button type="button" class="conv-modal-close" id="cv-modal-close" aria-label="Close sign in">&times;</button>
     <h2 id="auth-title">Join bartchat</h2>
-    <p class="conv-modal-note">Email/password on subx-skins. Dummy seed stays until you post. Preview lock stays until Jebb lifts it.</p>
+    <p class="conv-modal-note">Email/password on subx-skins. Guest is browse-only. Preview lock stays until Jebb lifts it. Google is off until that provider is enabled.</p>
     <div class="conv-modal-tabs">
       <button class="conv-modal-tab active" data-tab="login" type="button">Sign In</button>
       <button class="conv-modal-tab" data-tab="register" type="button">Register</button>
@@ -329,13 +330,18 @@
       <button class="conv-modal-submit" id="cv-login-btn" type="button">Sign In</button>
       <div class="conv-modal-divider">or</div>
       <button class="conv-google-btn" id="cv-google-login" type="button"><svg width="17" height="17" viewBox="0 0 18 18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/></svg> Continue with Google</button>
-      <button class="conv-guest-btn" id="cv-guest-login" type="button">Continue as guest</button>
+      <p class="conv-google-off">Google is off until that provider is enabled.</p>
+      <button class="conv-guest-btn" id="cv-guest-login" type="button">Continue as guest (browse only)</button>
     </div>
     <div id="cv-panel-register" style="display:none">
       <div class="conv-modal-err" id="cv-reg-err"></div>
       <div class="conv-modal-field"><label>Display Name</label><input type="text" id="cv-reg-name" autocomplete="nickname" placeholder="A rider handle"></div>
       <div class="conv-modal-field"><label>Email</label><input type="email" id="cv-reg-email" autocomplete="email" placeholder="you@email.com"></div>
       <div class="conv-modal-field"><label>Password</label><input type="password" id="cv-reg-pw" autocomplete="new-password" placeholder="At least 6 characters"></div>
+      <label class="conv-modal-check" for="cv-reg-age">
+        <input type="checkbox" id="cv-reg-age">
+        <span>I am 13 or older and agree to the <a href="terms.html" target="_blank" rel="noopener">Terms</a> and <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a> (preview stubs, not final counsel).</span>
+      </label>
       <button class="conv-modal-submit" id="cv-reg-btn" type="button">Create Account</button>
     </div>
   </div>
@@ -345,7 +351,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
-<script src="app.js?v=8"></script>
+  <script src="factory.js?v=1" data-site="site.json"></script>
   <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@1/index.js"></script>
 </body>
 </html>
