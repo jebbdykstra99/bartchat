@@ -23,6 +23,10 @@
   let attachedFile = null;
   let pollActive = false;
   let previewObjectUrl = null;
+  let siteKilled = false;
+  let blockedUids = {};
+  let blocksUnsub = null;
+  const ADMIN_UID = 'o774wL9hUVSi19EkDCgLqQomP8i2';
 
   try {
     firebase.initializeApp({
@@ -96,6 +100,109 @@
     return null;
   }
 
+  function isEmailVerified() {
+    var u = fbAuth && fbAuth.currentUser;
+    return !!(u && u.emailVerified);
+  }
+  function requireVerified(action) {
+    if (!isLiveUser()) {
+      composeErr('Sign in with email to ' + (action || 'post') + '. Guest can only browse.');
+      openAuth('login');
+      return false;
+    }
+    if (siteKilled) {
+      composeErr('This room is paused.');
+      return false;
+    }
+    if (!isEmailVerified()) {
+      composeErr('Verify your email before you ' + (action || 'post') + '. Check your inbox, then refresh.');
+      var u = fbAuth.currentUser;
+      if (u && u.sendEmailVerification) u.sendEmailVerification().catch(function () {});
+      return false;
+    }
+    return true;
+  }
+  function syncKillBanner() {
+    var el = document.getElementById('kill-banner');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'kill-banner';
+      el.className = 'preview-banner';
+      el.setAttribute('role', 'status');
+      el.hidden = true;
+      var prev = document.querySelector('.preview-banner');
+      if (prev && prev.parentNode) prev.parentNode.insertBefore(el, prev.nextSibling);
+      else document.body.insertBefore(el, document.body.firstChild);
+    }
+    if (siteKilled) {
+      el.hidden = false;
+      el.textContent = 'This room is paused.';
+    } else {
+      el.hidden = true;
+    }
+  }
+  function listenKillSwitch() {
+    if (!fbDb) return;
+    fbDb.collection('sites').doc(SITE_ID).onSnapshot(function (snap) {
+      var d = snap.exists ? (snap.data() || {}) : {};
+      siteKilled = d.killed === true;
+      syncKillBanner();
+    }, function () {});
+  }
+  function listenBlocks(uid) {
+    if (blocksUnsub) { blocksUnsub(); blocksUnsub = null; }
+    blockedUids = {};
+    if (!fbDb || !uid) { renderFeed(); return; }
+    blocksUnsub = fbDb.collection('users').doc(uid).collection('blocks').onSnapshot(function (snap) {
+      blockedUids = {};
+      snap.forEach(function (d) { blockedUids[d.id] = true; });
+      renderFeed();
+    }, function () {});
+  }
+  function reportPost(id) {
+    if (!requireVerified('report')) return;
+    var post = findPost(id);
+    if (!post || !fbDb) return;
+    fbDb.collection('reports').add({
+      siteId: SITE_ID,
+      postId: id,
+      targetUid: post.authorUid || '',
+      reporterUid: liveUid(),
+      reason: 'abuse',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function () {
+      composeErr('Reported. Thanks.');
+    }).catch(function (e) {
+      composeErr((e && e.message) ? e.message : 'Could not report.');
+    });
+  }
+  function blockUser(uid) {
+    if (!requireVerified('block')) return;
+    if (!uid || uid === liveUid() || !fbDb) return;
+    fbDb.collection('users').doc(liveUid()).collection('blocks').doc(uid).set({
+      siteId: SITE_ID,
+      blockerUid: liveUid(),
+      targetUid: uid,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function () {
+      composeErr('Blocked. Their posts are hidden for you.');
+    }).catch(function (e) {
+      composeErr((e && e.message) ? e.message : 'Could not block.');
+    });
+  }
+  window.subxKill = function (on) {
+    if (!fbAuth || !fbAuth.currentUser || fbAuth.currentUser.uid !== ADMIN_UID) {
+      console.warn('subxKill: not admin');
+      return Promise.reject(new Error('not admin'));
+    }
+    return fbDb.collection('sites').doc(SITE_ID).set({
+      killed: !!on,
+      siteId: SITE_ID,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
+  };
+
+
   function applyTheme(tokens) {
     if (!tokens) return;
     var root = document.documentElement;
@@ -159,6 +266,10 @@
     renderSidebarAuth();
     hideDummyChrome();
     syncProfile();
+    listenBlocks(user.uid);
+    if (!user.emailVerified) {
+      composeErr('Verify your email before posting. Check your inbox, then refresh.');
+    }
   }
 
   function mapLive(doc) {
@@ -356,6 +467,13 @@
     const delBtn = canDelete
       ? '<button class="post-action post-action-delete" data-act="delete" type="button">Delete</button>'
       : '';
+    const other = !!(uid && post.authorUid && post.authorUid !== uid);
+    const reportBtn = other
+      ? '<button class="post-action" data-act="report" type="button">Report</button>'
+      : '';
+    const blockBtn = other
+      ? '<button class="post-action" data-act="block" type="button">Block</button>'
+      : '';
     return (
       '<article class="post' + (isReply ? ' post-reply' : '') + '" data-post-id="' + escapeHtml(post.id) + '"' +
         (post.parentId ? ' data-parent-id="' + escapeHtml(post.parentId) + '"' : '') + '>' +
@@ -372,6 +490,7 @@
             replyBtn +
             '<button class="post-action' + (liked ? ' liked' : '') + '" data-act="like" type="button">Like · ' + likeCount + '</button>' +
             '<button class="post-action" data-act="share" type="button">Share</button>' +
+            reportBtn + blockBtn +
             delBtn +
           '</div>' +
         '</div>' +
@@ -380,11 +499,11 @@
   }
 
   function topLevelPosts() {
-    return livePosts.filter(function (p) { return !p.parentId; });
+    return livePosts.filter(function (p) { return !p.parentId && !(p.authorUid && blockedUids[p.authorUid]); });
   }
 
   function repliesFor(parentId) {
-    return livePosts.filter(function (p) { return p.parentId === parentId; })
+    return livePosts.filter(function (p) { return p.parentId === parentId && !(p.authorUid && blockedUids[p.authorUid]); })
       .sort(function (a, b) { return (a.ms || 0) - (b.ms || 0); });
   }
 
@@ -593,6 +712,10 @@
     renderSidebarAuth();
     hideDummyChrome();
     syncProfile();
+    listenBlocks(user.uid);
+    if (!user.emailVerified) {
+      composeErr('Verify your email before posting. Check your inbox, then refresh.');
+    }
   }
   function signOut() {
     if (fbAuth && fbAuth.currentUser) fbAuth.signOut();
@@ -695,6 +818,7 @@
     if (!(text || attachedFile || pollReady)) return;
     const live = fbAuth && fbAuth.currentUser;
     if (!live) { composeErr('Sign in with email to post. Guest can only browse.'); openAuth('login'); return; }
+    if (!requireVerified('post')) return;
     if (!fbDb) { composeErr('Feed is not connected.'); return; }
     const parentId = replyTo;
     replyTo = null;
@@ -774,6 +898,7 @@
 
   function votePoll(postId, idx) {
     var uid = liveUid();
+    if (!requireVerified('vote')) return;
     if (!uid) {
       composeErr('Sign in with email to vote. Guest cannot vote.');
       openAuth('login');
@@ -946,6 +1071,19 @@
         if (!isLiveUser()) openAuth('login');
         return;
       }
+      if (e.target.closest('[data-act="report"]')) {
+        const post = e.target.closest('[data-post-id]');
+        if (!post) return;
+        reportPost(post.dataset.postId);
+        return;
+      }
+      if (e.target.closest('[data-act="block"]')) {
+        const post = e.target.closest('[data-post-id]');
+        if (!post) return;
+        const p = findPost(post.dataset.postId);
+        if (p && p.authorUid) blockUser(p.authorUid);
+        return;
+      }
 
       const etab = e.target.closest('[data-explore-tab]');
       if (etab) {
@@ -1053,6 +1191,7 @@
       err.textContent = '';
       fbAuth.createUserWithEmailAndPassword(email, pw).then(function (cred) {
         const disp = name || email.split('@')[0];
+        cred.user.sendEmailVerification().catch(function () {});
         return cred.user.updateProfile({ displayName: disp }).then(function () {
           if (fbDb) {
             return fbDb.collection('users').doc(cred.user.uid).set({
@@ -1062,6 +1201,8 @@
               createdAt: firebase.firestore.FieldValue.serverTimestamp()
             }, { merge: true });
           }
+        }).then(function () {
+          composeErr('Account created. Verify your email before posting.');
         });
       }).catch(function (e) {
         err.textContent = (e && e.message) ? e.message : 'Could not create account.';
@@ -1142,17 +1283,21 @@
     if (fbAuth) {
       fbAuth.onAuthStateChanged(function (user) {
         if (user) applyFbUser(user);
-        else if (currentUser && currentUser.live) {
-          currentUser = null;
-          saveJSON(LS_USER, null);
-          renderSidebarAuth();
-          hideDummyChrome();
-          syncProfile();
-          renderFeed();
+        else {
+          listenBlocks(null);
+          if (currentUser && currentUser.live) {
+            currentUser = null;
+            saveJSON(LS_USER, null);
+            renderSidebarAuth();
+            hideDummyChrome();
+            syncProfile();
+            renderFeed();
+          }
         }
       });
     }
 
+    listenKillSwitch();
     wireEvents();
     renderTrends();
     renderExplore();
