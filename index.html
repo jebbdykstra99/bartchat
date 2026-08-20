@@ -138,8 +138,8 @@
           <textarea class="thoughts-compose-input" id="thoughts-compose-input" placeholder="What's happening on BART?" rows="2" maxlength="280"></textarea>
         </div>
       </div>
-      <input type="file" id="compose-image-input" accept="image/*" style="display:none">
-      <input type="file" id="compose-gif-input" accept="image/gif" style="display:none">
+      <input type="file" id="compose-image-input" accept="image/*,.jpg,.jpeg,.png,.gif,.webp,.heic,.heif,.bmp" style="display:none">
+      <input type="file" id="compose-gif-input" accept="image/gif,.gif" style="display:none">
       <div id="compose-image-preview" class="compose-image-preview" hidden>
         <img id="compose-preview-img" alt="">
         <button type="button" class="compose-image-remove" id="compose-image-remove" title="Remove">&times;</button>
@@ -355,7 +355,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
-  <script src="factory.js?v=5" data-site="site.json"></script>
+  <script src="factory.js?v=6" data-site="site.json"></script>
   <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@1/index.js"></script>
 </body>
 </html>
