@@ -11,7 +11,7 @@ service cloud.firestore {
       return signedIn() && request.auth.uid == 'o774wL9hUVSi19EkDCgLqQomP8i2';
     }
     function factorySite(data) {
-      return data.siteId in ['samochat', 'bartchat'];
+      return data.siteId in ['samochat', 'bartchat', '415chat', 'gpchat', '27chat', '808chat', 'buffettchat', 'gaichat', 'popechat', 'recruitchat'];
     }
     function notKilled(sid) {
       return !exists(/databases/$(database)/documents/sites/$(sid))
