@@ -1,5 +1,6 @@
 {
   "siteId": "bartchat",
+  "redditSr": "bartchat",
   "name": "bartchat",
   "tagline": "Nothing but BART.",
   "composePlaceholder": "What's happening on BART?",
