@@ -6,12 +6,12 @@ service firebase.storage {
       allow create, update: if request.auth != null
         && request.auth.token.email_verified == true
         && request.auth.uid == uid
-        && siteId in ['samochat', 'bartchat']
+        && siteId in ['samochat', 'bartchat', '415chat', 'gpchat', '27chat', '808chat', 'buffettchat', 'gaichat', 'popechat', 'recruitchat']
         && request.resource.contentType.matches('image/.*')
         && request.resource.size < 5 * 1024 * 1024;
       allow delete: if request.auth != null
         && request.auth.uid == uid
-        && siteId in ['samochat', 'bartchat'];
+        && siteId in ['samochat', 'bartchat', '415chat', 'gpchat', '27chat', '808chat', 'buffettchat', 'gaichat', 'popechat', 'recruitchat'];
     }
   }
 }
