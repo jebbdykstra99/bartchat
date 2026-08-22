@@ -16,8 +16,8 @@
   --teal:        #0077a8;
   --silver:      #b8c2cc;
   --border:      #c5cbd2;
-  --nav-w:       240px;
-  --right-w:     280px;
+  --nav-w:          275px;
+  --right-w:          330px;
   --ui:          Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
   --display:     "IBM Plex Sans", Inter, sans-serif;
 }
