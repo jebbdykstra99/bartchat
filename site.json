@@ -465,6 +465,7 @@
     "forecastPage": "https://www.bart.gov/schedules/advisories",
     "porch": {
       "prompt": "Delayed or moving?",
+      "dwellMs": 9000,
       "options": [
         "Delayed",
         "Moving"
