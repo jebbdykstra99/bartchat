@@ -4,7 +4,7 @@
   "name": "bartchat",
   "tagline": "Nothing but BART.",
   "composePlaceholder": "What's happening on BART?",
-  "emptyState": "This room is empty. Sign in with email to post the first take about BART. Guest can browse only.",
+  "emptyState": "This room is empty. Sign in with email to post the first take about BART. Guest can browse only. Not official BART.",
   "theme": {
     "bg": "#e6e8eb",
     "surface": "#f4f5f7",
@@ -82,6 +82,31 @@
   ],
   "places": [
     {
+      "tag": "Line",
+      "title": "Yellow",
+      "snippet": "Antioch / Pittsburg / SFO / Millbrae spine. Night work and Peninsula cutoffs live here."
+    },
+    {
+      "tag": "Line",
+      "title": "Orange",
+      "snippet": "Richmond ↔ Berryessa / Warm Springs. East Bay through-line; weekend bus bridges hit the south end."
+    },
+    {
+      "tag": "Line",
+      "title": "Red",
+      "snippet": "Richmond ↔ Millbrae. Same platforms, opposite lives — photograph the headsign."
+    },
+    {
+      "tag": "Line",
+      "title": "Blue",
+      "snippet": "Dublin/Pleasanton ↔ Daly City. Long waits and the map that lies at transfer."
+    },
+    {
+      "tag": "Line",
+      "title": "Green",
+      "snippet": "Berryessa / Warm Springs ↔ Daly City. South Bay end; Union City–Warm Springs bus bridge weekends."
+    },
+    {
       "tag": "Station",
       "title": "Embarcadero",
       "snippet": "Transbay Tube mouth. Delays start here and travel both directions."
@@ -93,65 +118,40 @@
     },
     {
       "tag": "Station",
-      "title": "12th Street Oakland",
-      "snippet": "Transfers, three levels, and announcements that argue with the signs."
-    },
-    {
-      "tag": "Station",
       "title": "MacArthur",
       "snippet": "The bottleneck. Yellow, orange, red — pick a platform and hope."
-    },
-    {
-      "tag": "Station",
-      "title": "West Oakland",
-      "snippet": "Last stop before the Tube. Trains bunch. Doors stay open too long."
-    },
-    {
-      "tag": "Station",
-      "title": "Millbrae",
-      "snippet": "Peninsula end of the line. Last-train energy after 11."
-    },
-    {
-      "tag": "Station",
-      "title": "Civic Center",
-      "snippet": "Peak crush. The next train is always twelve minutes out."
-    },
-    {
-      "tag": "Station",
-      "title": "24th Street Mission",
-      "snippet": "Platform mixups and the train that left while you were on the wrong side."
     }
   ],
   "topics": [
     {
-      "tag": "Delay",
-      "title": "Yellow / Orange / Red",
-      "snippet": "Minutes on the board vs. minutes in real life. Bring a book."
+      "tag": "Corridor",
+      "title": "Transbay",
+      "snippet": "West Oakland ↔ Embarcadero Tube. No bars, bunching, delay travels both ways."
     },
     {
-      "tag": "Clipper",
-      "title": "Fare gates & taps",
+      "tag": "Station",
+      "title": "SFO",
+      "snippet": "Airport station is not the terminal. Elevator lottery, fare machines, walk you forgot to budget."
+    },
+    {
+      "tag": "Rider",
+      "title": "Clipper & fare gates",
       "snippet": "Red X, try the next gate, pretend this is normal."
     },
     {
-      "tag": "Elevators",
-      "title": "Out of service",
-      "snippet": "Powell, 19th, MacArthur — the stairs become the plan."
+      "tag": "Rider",
+      "title": "Elevators",
+      "snippet": "Out of service notes — only when sourced from bart.gov."
     },
     {
-      "tag": "Mixup",
-      "title": "Platform changes",
-      "snippet": "Announcements vs. signs vs. the train that actually shows up."
+      "tag": "Rider",
+      "title": "Last train",
+      "snippet": "End of service. Miss it and you are on a night bus."
     },
     {
-      "tag": "Last train",
-      "title": "End of service",
-      "snippet": "Millbrae, Richmond, Antioch. Miss it and you are on a night bus."
-    },
-    {
-      "tag": "Bike car",
-      "title": "Car 1",
-      "snippet": "Bikes, scooters, and the person who sat in the designated space."
+      "tag": "Trust",
+      "title": "Not official BART",
+      "snippet": "Advisories from bart.gov. Ads off in preview."
     }
   ],
   "stories": {
@@ -465,16 +465,16 @@
     "title": "Room Brief",
     "kicker": "On BART",
     "meta": "Live · BART",
-    "footer": "Official BART advisories. Not a news ingest. 511 token later.",
+    "footer": "Official BART advisories. Not a news ingest. Not official BART. Ads off in preview.",
     "bartKey": "MW9S-E7SL-26DU-VV8V",
     "forecastPage": "https://www.bart.gov/schedules/advisories",
     "porch": {
       "prompt": "Delayed or moving?",
-      "dwellMs": 9000,
       "options": [
         "Delayed",
         "Moving"
-      ]
+      ],
+      "dwellMs": 9000
     }
   }
 }
