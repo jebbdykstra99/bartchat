@@ -163,9 +163,9 @@
   "seed": [
     {
       "id": "steward-1",
-      "name": "Realtime BSA",
-      "handle": "bart_bsa",
-      "text": "FACT: BSA board is clear right now — no live advisories as of ~12:10a PDT. Official board: https://www.bart.gov/schedules/advisories Anyone riding early Friday still checking the app?",
+      "name": "Weekend bus bridge",
+      "handle": "unioncity_bridge",
+      "text": "Planned: free buses replace trains Union City ↔ Warm Springs some weekends through September — next work dates Sep 26–27; Green Line note on those work days. https://www.bart.gov/schedules/advisories\nSouth Bay this weekend — train or the free bus bridge?",
       "hours": 1,
       "likes": 0,
       "replies": 0,
@@ -173,50 +173,40 @@
     },
     {
       "id": "steward-2",
-      "name": "Weekend bus bridge",
-      "handle": "unioncity_bridge",
-      "text": "FACT: Free buses replace trains Union City ↔ Warm Springs on Sep 26–27; Green Line note on those work days. https://www.bart.gov/schedules/advisories Train or free bus bridge?",
+      "name": "Peninsula nights",
+      "handle": "peninsula_nights",
+      "text": "Expect ~30-minute delays starting 9pm some Sun–Thu nights between Millbrae and SFO (train-control modernization; through Summer 2026 per BART). https://www.bart.gov/schedules/advisories\nLate Peninsula run tonight or wait it out?",
       "hours": 2,
       "likes": 0,
       "replies": 0,
-      "followed": true
+      "followed": false
     },
     {
       "id": "steward-3",
-      "name": "Peninsula nights",
-      "handle": "peninsula_nights",
-      "text": "FACT: Expect ~30-minute delays from 9pm some Sun–Thu nights between Millbrae and SFO for train-control modernization through Summer 2026. https://www.bart.gov/schedules/advisories Late run or wait it out?",
-      "hours": 3,
-      "likes": 0,
-      "replies": 0,
-      "followed": false
-    },
-    {
-      "id": "steward-4",
       "name": "Pleasant Hill single-track",
       "handle": "pleasant_hill",
-      "text": "FACT: Single tracking near Pleasant Hill for vegetation management; next work day Oct 4. https://www.bart.gov/schedules/advisories Who is building buffer into that Concord/Walnut Creek hop?",
-      "hours": 4,
+      "text": "Single tracking near Pleasant Hill for vegetation management — next work day Oct 4 (two tracks → one while active). https://www.bart.gov/schedules/advisories\nWho’s already building buffer into that Concord/Walnut Creek hop?",
+      "hours": 3,
       "likes": 0,
       "replies": 0,
       "followed": true
     },
     {
-      "id": "steward-5",
+      "id": "steward-4",
       "name": "24th St Mission elevator",
       "handle": "mission_elevator",
-      "text": "FACT: 24th St. Mission elevator is out of service July 13 → Oct 23 (planned advisory). https://www.bart.gov/schedules/advisories Mission riders, workaround locked in?",
-      "hours": 5,
+      "text": "24th St. Mission elevator out of service July 13 → Oct 23 (planned elevator advisory). https://www.bart.gov/schedules/advisories\nMission riders — street-to-platform workaround locked in, or avoiding that gate?",
+      "hours": 4,
       "likes": 0,
       "replies": 0,
       "followed": false
     },
     {
-      "id": "steward-6",
+      "id": "steward-5",
       "name": "BARTable chip",
       "handle": "bartable",
-      "text": "FACT: Board meeting video/live links are on BART’s official YouTube — outbound only, we don’t re-stream. https://www.youtube.com/BARTable Watching a tape or archive-only?",
-      "hours": 6,
+      "text": "Board meeting video / live links on BART’s official YouTube — outbound only, we don’t re-stream. https://www.youtube.com/BARTable\nAnyone actually watching a Board tape this cycle, or archive-only?",
+      "hours": 5,
       "likes": 0,
       "replies": 0,
       "followed": true
@@ -251,7 +241,7 @@
       "messages": [
         {
           "me": false,
-          "text": "Sep 26–27 bus bridge Union City ↔ Warm Springs is on the official board — route around it or ride the free buses?"
+          "text": "Sep 26–27 bus bridge UCTY↔Warm Springs is on the official board — are you routing around it or riding the free buses?"
         },
         {
           "me": true,
@@ -267,7 +257,7 @@
       "messages": [
         {
           "me": false,
-          "text": "9pm Millbrae–SFO delay window is still posted through Summer 2026 — cut the trip earlier or eat the 30?"
+          "text": "9pm Millbrae–SFO delay window still posted through Summer 2026 — do you cut the trip earlier, or eat the 30?"
         },
         {
           "me": true,
