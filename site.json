@@ -475,6 +475,23 @@
         "Moving"
       ],
       "dwellMs": 9000
-    }
+    },
+    "outbound": [
+      {
+        "tag": "Board",
+        "headline": "BART Advisories",
+        "url": "https://www.bart.gov/schedules/advisories",
+        "snippet": "Official BART service advisories board (same BSA/source family as Room Brief).",
+        "meta": "Official · board"
+      },
+      {
+        "tag": "Watch",
+        "headline": "BARTable",
+        "url": "https://www.youtube.com/BARTable",
+        "snippet": "BART official YouTube channel (Board meeting video/live). Outbound only — no in-app re-stream.",
+        "meta": "Official · link-out"
+      }
+    ],
+    "maxCards": 4
   }
 }
