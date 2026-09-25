@@ -159,251 +159,67 @@
     "maxSeconds": 15,
     "maxBytes": 8000000
   },
-  "seedNote": "sample — not mixed into the live feed",
+  "seedNote": "STEWARD_REFRESH Fri 2026-09-25 · BART Advisories/BARTable · no second Berryessa fight",
   "seed": [
     {
-      "id": "p1",
-      "name": "Pittsburg Bay",
-      "handle": "pittsburgbay",
-      "text": "Boarded at MacArthur thinking Millbrae. Doors closed. Richmond. The map on the car still said yellow. I am in El Cerrito energy and I have a meeting at Montgomery.",
+      "id": "steward-1",
+      "name": "Realtime BSA",
+      "handle": "bart_bsa",
+      "text": "FACT: BSA board is clear right now — no live advisories as of ~12:10a PDT. Official board: https://www.bart.gov/schedules/advisories Anyone riding early Friday still checking the app?",
       "hours": 1,
-      "likes": 318,
-      "replies": 52,
-      "followed": true,
-      "snippet": {
-        "handle": "millbraemix",
-        "text": "This is a weekly sport. Look at the destination before you sit."
-      }
+      "likes": 0,
+      "replies": 0,
+      "followed": true
     },
     {
-      "id": "p2",
-      "name": "Dublin Wait",
-      "handle": "dublinwait",
-      "text": "Dublin/Pleasanton showing 22 minutes. Platform is a parking lot of people checking the app that is also lying. If you are still at West Dublin, stay on the bus.",
+      "id": "steward-2",
+      "name": "Weekend bus bridge",
+      "handle": "unioncity_bridge",
+      "text": "FACT: Free buses replace trains Union City ↔ Warm Springs on Sep 26–27; Green Line note on those work days. https://www.bart.gov/schedules/advisories Train or free bus bridge?",
       "hours": 2,
-      "likes": 241,
-      "replies": 38,
+      "likes": 0,
+      "replies": 0,
       "followed": true
     },
     {
-      "id": "p3",
-      "name": "Tube Rider",
-      "handle": "transbaytube",
-      "text": "Transbay Tube, no bars, AC doing a rumor. We have been between West Oakland and Embarcadero long enough to learn the emergency sticker by heart.",
+      "id": "steward-3",
+      "name": "Peninsula nights",
+      "handle": "peninsula_nights",
+      "text": "FACT: Expect ~30-minute delays from 9pm some Sun–Thu nights between Millbrae and SFO for train-control modernization through Summer 2026. https://www.bart.gov/schedules/advisories Late run or wait it out?",
       "hours": 3,
-      "likes": 189,
-      "replies": 27,
-      "followed": true,
-      "snippet": {
-        "handle": "embarcdelay",
-        "text": "Same train. I counted the lights."
-      }
+      "likes": 0,
+      "replies": 0,
+      "followed": false
     },
     {
-      "id": "p4",
-      "name": "Powell Up",
-      "handle": "powellup",
-      "text": "Powell St elevator out. Again. Two flights of stairs with a suitcase and a stroller traffic jam. This is not a surprise. It is a lifestyle.",
+      "id": "steward-4",
+      "name": "Pleasant Hill single-track",
+      "handle": "pleasant_hill",
+      "text": "FACT: Single tracking near Pleasant Hill for vegetation management; next work day Oct 4. https://www.bart.gov/schedules/advisories Who is building buffer into that Concord/Walnut Creek hop?",
       "hours": 4,
-      "likes": 276,
-      "replies": 41,
-      "followed": false
+      "likes": 0,
+      "replies": 0,
+      "followed": true
     },
     {
-      "id": "p5",
-      "name": "Gate Jam",
-      "handle": "gatejam",
-      "text": "Montgomery fare gate ate my Clipper, flashed red, then jammed open for everyone behind me. Agent booth empty. Honor system with extra steps.",
+      "id": "steward-5",
+      "name": "24th St Mission elevator",
+      "handle": "mission_elevator",
+      "text": "FACT: 24th St. Mission elevator is out of service July 13 → Oct 23 (planned advisory). https://www.bart.gov/schedules/advisories Mission riders, workaround locked in?",
       "hours": 5,
-      "likes": 154,
-      "replies": 22,
-      "followed": true
+      "likes": 0,
+      "replies": 0,
+      "followed": false
     },
     {
-      "id": "p6",
-      "name": "Bike Car West",
-      "handle": "bikecarwest",
-      "text": "Bike car on the Dublin train was a wall of handlebars. I skipped two trains. If you bring a cargo bike at 5:15 you are the delay.",
+      "id": "steward-6",
+      "name": "BARTable chip",
+      "handle": "bartable",
+      "text": "FACT: Board meeting video/live links are on BART’s official YouTube — outbound only, we don’t re-stream. https://www.youtube.com/BARTable Watching a tape or archive-only?",
       "hours": 6,
-      "likes": 97,
-      "replies": 19,
-      "followed": false,
-      "snippet": {
-        "handle": "dublinwait",
-        "text": "Saw you on the platform. The next one was worse."
-      }
-    },
-    {
-      "id": "p7",
-      "name": "Platform Heat",
-      "handle": "platformheat",
-      "text": "Concord platform in August is a griddle. No shade, no breeze, the arriving train is also warm. Warm-platform summer is undefeated.",
-      "hours": 7,
-      "likes": 203,
-      "replies": 16,
+      "likes": 0,
+      "replies": 0,
       "followed": true
-    },
-    {
-      "id": "p8",
-      "name": "Millbrae Mix",
-      "handle": "millbraemix",
-      "text": "Richmond vs Millbrae is not a mixup, it is a trap. Same platform, opposite lives. I now photograph the headsign like a crime scene.",
-      "hours": 8,
-      "likes": 412,
-      "replies": 67,
-      "followed": true,
-      "snippet": {
-        "handle": "pittsburgbay",
-        "text": "I did this today. We are a support group."
-      }
-    },
-    {
-      "id": "p9",
-      "name": "Antioch End",
-      "handle": "antiochend",
-      "text": "Yellow line crawled from Pittsburg Center like it owed the rails money. Four stops. Twenty-eight minutes. I could have walked the highway faster and I would not have.",
-      "hours": 9,
-      "likes": 88,
-      "replies": 11,
-      "followed": false
-    },
-    {
-      "id": "p10",
-      "name": "19th Wait",
-      "handle": "19thwait",
-      "text": "19th St Oakland is shoulder-to-shoulder and the next Richmond is “arriving” for the third time. If you hear the tones, do not celebrate yet.",
-      "hours": 11,
-      "likes": 131,
-      "replies": 18,
-      "followed": true
-    },
-    {
-      "id": "p11",
-      "name": "Colma Skip",
-      "handle": "colmaskip",
-      "text": "Train skipped Colma without a word. Platform full of people who had already tagged in. Someone yelled at the operator through a closed door. Fair.",
-      "hours": 13,
-      "likes": 176,
-      "replies": 29,
-      "followed": false
-    },
-    {
-      "id": "p12",
-      "name": "SFO Air",
-      "handle": "sfoairbart",
-      "text": "SFO station is not the terminal. It is a walk, an elevator lottery, and a family arguing with a fare machine. Budget forty minutes or miss the flight.",
-      "hours": 15,
-      "likes": 220,
-      "replies": 34,
-      "followed": true
-    },
-    {
-      "id": "p13",
-      "name": "Warm Springs",
-      "handle": "warmspringsend",
-      "text": "Green line to Warm Springs saying 18 min, then 12, then 18 again. Berryessa people are sitting on the floor like this is a delayed flight.",
-      "hours": 16,
-      "likes": 74,
-      "replies": 8,
-      "followed": false
-    },
-    {
-      "id": "p14",
-      "name": "Civic Gate",
-      "handle": "civicgate",
-      "text": "Civic Center fare gates are eating Clipper cards and coughing them back. I tapped three times. The fourth was a jump. Not proud. Not sorry.",
-      "hours": 18,
-      "likes": 109,
-      "replies": 21,
-      "followed": true,
-      "snippet": {
-        "handle": "gatejam",
-        "text": "Montgomery did the same thing an hour ago."
-      }
-    },
-    {
-      "id": "p15",
-      "name": "Lake Merritt Up",
-      "handle": "lakemerrittup",
-      "text": "Lake Merritt elevator smells like a science project and one of the two is out. Stairs it is. My knees have opinions.",
-      "hours": 20,
-      "likes": 61,
-      "replies": 7,
-      "followed": false
-    },
-    {
-      "id": "p16",
-      "name": "West Oak Jump",
-      "handle": "westoakjump",
-      "text": "West Oakland transfer is a stampede if the Dublin train and the Tube train hit at once. I lost a shoe. I found the shoe. I missed the train.",
-      "hours": 22,
-      "likes": 198,
-      "replies": 24,
-      "followed": true
-    },
-    {
-      "id": "p17",
-      "name": "Berryessa Clock",
-      "handle": "berryessawait",
-      "text": "Berryessa platform clock is seven minutes fast or the train is seven minutes slow. Either way I am lying to my calendar.",
-      "hours": 24,
-      "likes": 55,
-      "replies": 6,
-      "followed": false
-    },
-    {
-      "id": "p18",
-      "name": "Embarc Delay",
-      "handle": "embarcdelay",
-      "text": "Embarcadero bottleneck. Three lines, one platform mood. Someone is eating chips like we are not in a metal tube under Market.",
-      "hours": 26,
-      "likes": 147,
-      "replies": 31,
-      "followed": true,
-      "snippet": {
-        "handle": "transbaytube",
-        "text": "That was me. Salt and vinegar. No regrets."
-      }
-    },
-    {
-      "id": "p19",
-      "name": "Fremont Car",
-      "handle": "fremontcar",
-      "text": "Fremont train with no AC and every window locked. Warm-platform summer followed us into the car. I am a melted Clipper card.",
-      "hours": 28,
-      "likes": 92,
-      "replies": 13,
-      "followed": false
-    },
-    {
-      "id": "p20",
-      "name": "North Berk Lift",
-      "handle": "nberkelevator",
-      "text": "North Berkeley elevator out since Tuesday if the handwritten sign is telling the truth. The other sign says “temporarily.” It is Friday.",
-      "hours": 30,
-      "likes": 83,
-      "replies": 9,
-      "followed": true
-    },
-    {
-      "id": "p21",
-      "name": "MacArthur Mix",
-      "handle": "macarthurmix",
-      "text": "MacArthur is where the colors lie. I watched six people board Richmond with Millbrae faces. I said something. They did not get off. See you in El Cerrito.",
-      "hours": 32,
-      "likes": 267,
-      "replies": 44,
-      "followed": true
-    },
-    {
-      "id": "p22",
-      "name": "Daly City End",
-      "handle": "dalycityend",
-      "text": "Daly City turnback. Train sat with doors open for twelve minutes while the operator argued with the radio. At least we were above ground.",
-      "hours": 36,
-      "likes": 70,
-      "replies": 10,
-      "followed": false
     }
   ],
   "notifs": [
@@ -428,34 +244,34 @@
   ],
   "threads": [
     {
-      "id": "t1",
-      "name": "Millbrae Mix",
-      "handle": "millbraemix",
-      "preview": "Did you photograph the headsign too?",
+      "id": "steward-seed-a",
+      "name": "Weekend South Bay",
+      "handle": "southbay_bridge",
+      "preview": "Use the official BART advisory for the service note: https://www.bart.gov/schedules/advisories",
       "messages": [
         {
           "me": false,
-          "text": "Did you photograph the headsign too?"
+          "text": "Sep 26–27 bus bridge Union City ↔ Warm Springs is on the official board — route around it or ride the free buses?"
         },
         {
           "me": true,
-          "text": "Every time. Richmond vs Millbrae is a trap. See you on the next one."
+          "text": "Use the official BART advisory for the service note: https://www.bart.gov/schedules/advisories"
         }
       ]
     },
     {
-      "id": "t2",
-      "name": "Tube Rider",
-      "handle": "transbaytube",
-      "preview": "Still in the Tube. You?",
+      "id": "steward-seed-b",
+      "name": "Night Peninsula",
+      "handle": "night_peninsula",
+      "preview": "Check the advisory before leaving; this is a refresh, not a second Berryessa fight: https://www.bart.gov/schedules/advisories",
       "messages": [
         {
           "me": false,
-          "text": "Still in the Tube. You?"
+          "text": "9pm Millbrae–SFO delay window is still posted through Summer 2026 — cut the trip earlier or eat the 30?"
         },
         {
           "me": true,
-          "text": "West Oakland. If this door closes I owe you a coffee."
+          "text": "Check the advisory before leaving; this is a refresh, not a second Berryessa fight: https://www.bart.gov/schedules/advisories"
         }
       ]
     }
@@ -464,15 +280,15 @@
     "kind": "bart-bsa",
     "title": "Room Brief",
     "kicker": "On BART",
-    "meta": "Live · BART",
-    "footer": "Official BART advisories. Not a news ingest. Not official BART. Ads off in preview.",
+    "meta": "Live · BART · Fri FACT",
+    "footer": "Official BART advisories. Fri Sep 25 FACT: no live advisories as of ~12:10a PDT. Not a news ingest. Not official BART. Ads off in preview.",
     "bartKey": "MW9S-E7SL-26DU-VV8V",
     "forecastPage": "https://www.bart.gov/schedules/advisories",
     "porch": {
-      "prompt": "Delayed or moving?",
+      "prompt": "Clear board or weekend bus bridge?",
       "options": [
-        "Delayed",
-        "Moving"
+        "Clear BSA",
+        "Sep 26–27 bridge"
       ],
       "dwellMs": 9000
     },
