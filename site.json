@@ -154,6 +154,88 @@
       "snippet": "Advisories from bart.gov. Ads off in preview."
     }
   ],
+  "nests": [
+    {
+      "slug": "yellow",
+      "label": "Yellow",
+      "parent": null,
+      "kind": "service",
+      "blurb": "Antioch / Pittsburg ↔ SFO / Millbrae spine. Night work and Peninsula cutoffs live here.",
+      "nav": true
+    },
+    {
+      "slug": "orange",
+      "label": "Orange",
+      "parent": null,
+      "kind": "service",
+      "blurb": "Richmond ↔ Berryessa / Warm Springs. East Bay through-line; weekend bus bridges hit the south end.",
+      "nav": true
+    },
+    {
+      "slug": "red",
+      "label": "Red",
+      "parent": null,
+      "kind": "service",
+      "blurb": "Richmond ↔ Millbrae. Same platforms, opposite lives — photograph the headsign.",
+      "nav": true
+    },
+    {
+      "slug": "blue",
+      "label": "Blue",
+      "parent": null,
+      "kind": "service",
+      "blurb": "Dublin/Pleasanton ↔ Daly City. Long waits and the map that lies at transfer.",
+      "nav": true
+    },
+    {
+      "slug": "green",
+      "label": "Green",
+      "parent": null,
+      "kind": "service",
+      "blurb": "Berryessa / Warm Springs ↔ Daly City. South Bay end; Union City–Warm Springs bus bridges.",
+      "nav": true
+    },
+    {
+      "slug": "transbay",
+      "label": "Transbay",
+      "parent": null,
+      "kind": "place",
+      "blurb": "West Oakland ↔ Embarcadero Tube. No bars, bunching, delay travels both ways.",
+      "nav": true
+    },
+    {
+      "slug": "sfo",
+      "label": "SFO",
+      "parent": null,
+      "kind": "place",
+      "blurb": "Airport station ≠ terminal. Elevator lottery, fare machines, the AirTrain walk you forgot.",
+      "nav": true
+    },
+    {
+      "slug": "peninsula-nights",
+      "label": "Peninsula nights",
+      "parent": null,
+      "kind": "theme",
+      "blurb": "Millbrae–SFO–Daly City late work, cutoffs, last-train sprint talk.",
+      "nav": true
+    },
+    {
+      "slug": "south-bay",
+      "label": "South Bay",
+      "parent": null,
+      "kind": "place",
+      "blurb": "Berryessa / Warm Springs / Union City end — weekend bus bridges and headsign traps.",
+      "nav": true
+    },
+    {
+      "slug": "east-bay",
+      "label": "East Bay",
+      "parent": null,
+      "kind": "place",
+      "blurb": "Richmond–Antioch–Dublin spines inland of the Tube. Transfers at MacArthur / 12th St.",
+      "nav": true
+    }
+  ],
   "stories": {
     "enabled": true,
     "maxSeconds": 15,
