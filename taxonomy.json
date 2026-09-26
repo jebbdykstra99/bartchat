@@ -1,0 +1,113 @@
+{
+  "siteId": "bartchat",
+  "domain": "bartchat.com",
+  "taxonomyName": "BART lines",
+  "topics": [
+    {
+      "id": "yellow",
+      "label": "Yellow Line",
+      "kind": "agency",
+      "blurb": "Antioch–SFO/Millbrae",
+      "followDefault": true,
+      "adminSeed": true,
+      "status": "active",
+      "symbol": "#YEL"
+    },
+    {
+      "id": "red",
+      "label": "Red Line",
+      "kind": "agency",
+      "blurb": "Richmond–Millbrae",
+      "followDefault": true,
+      "adminSeed": true,
+      "status": "active",
+      "symbol": "#RED"
+    },
+    {
+      "id": "blue",
+      "label": "Blue Line",
+      "kind": "agency",
+      "blurb": "Dublin/Pleasanton–Daly City",
+      "followDefault": true,
+      "adminSeed": true,
+      "status": "active",
+      "symbol": "#BLU"
+    },
+    {
+      "id": "green",
+      "label": "Green Line",
+      "kind": "agency",
+      "blurb": "Berryessa–Daly City",
+      "followDefault": true,
+      "adminSeed": true,
+      "status": "active",
+      "symbol": "#GRN"
+    },
+    {
+      "id": "orange",
+      "label": "Orange Line",
+      "kind": "agency",
+      "blurb": "Richmond–Berryessa",
+      "followDefault": true,
+      "adminSeed": true,
+      "status": "active",
+      "symbol": "#ORG"
+    },
+    {
+      "id": "elevators",
+      "label": "Elevators & access",
+      "kind": "theme",
+      "blurb": "Station access",
+      "followDefault": false,
+      "adminSeed": true,
+      "status": "active"
+    },
+    {
+      "id": "safety",
+      "label": "Safety",
+      "kind": "theme",
+      "blurb": "Ride safety talk",
+      "followDefault": true,
+      "adminSeed": true,
+      "status": "active"
+    },
+    {
+      "id": "fares",
+      "label": "Fares & Clipper",
+      "kind": "theme",
+      "blurb": "Pricing",
+      "followDefault": false,
+      "adminSeed": true,
+      "status": "active"
+    },
+    {
+      "id": "night",
+      "label": "Late night",
+      "kind": "theme",
+      "blurb": "Owl / late service",
+      "followDefault": false,
+      "adminSeed": true,
+      "status": "active"
+    },
+    {
+      "id": "service",
+      "label": "Service advisories",
+      "kind": "theme",
+      "blurb": "Delays & work",
+      "followDefault": true,
+      "adminSeed": true,
+      "status": "active"
+    }
+  ],
+  "topicCount": 10,
+  "defaultWatchlist": [
+    "yellow",
+    "red",
+    "blue",
+    "green",
+    "orange",
+    "safety",
+    "service"
+  ],
+  "notes": "adminSeed topics are factory pre-populated. Users may unfollow (remove from their list) or follow more from the full taxonomy. Admins may retire topics (status=retired) or add new ones; user lists stay editable."
+}
