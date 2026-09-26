@@ -299,5 +299,119 @@
       }
     ],
     "maxCards": 4
-  }
+  },
+  "taxonomy": {
+    "version": 1,
+    "name": "BART lines",
+    "symbolPrefix": "$",
+    "topics": [
+      {
+        "id": "yellow",
+        "label": "Yellow Line",
+        "kind": "agency",
+        "blurb": "Antioch–SFO/Millbrae",
+        "followDefault": true,
+        "adminSeed": true,
+        "status": "active",
+        "symbol": "#YEL"
+      },
+      {
+        "id": "red",
+        "label": "Red Line",
+        "kind": "agency",
+        "blurb": "Richmond–Millbrae",
+        "followDefault": true,
+        "adminSeed": true,
+        "status": "active",
+        "symbol": "#RED"
+      },
+      {
+        "id": "blue",
+        "label": "Blue Line",
+        "kind": "agency",
+        "blurb": "Dublin/Pleasanton–Daly City",
+        "followDefault": true,
+        "adminSeed": true,
+        "status": "active",
+        "symbol": "#BLU"
+      },
+      {
+        "id": "green",
+        "label": "Green Line",
+        "kind": "agency",
+        "blurb": "Berryessa–Daly City",
+        "followDefault": true,
+        "adminSeed": true,
+        "status": "active",
+        "symbol": "#GRN"
+      },
+      {
+        "id": "orange",
+        "label": "Orange Line",
+        "kind": "agency",
+        "blurb": "Richmond–Berryessa",
+        "followDefault": true,
+        "adminSeed": true,
+        "status": "active",
+        "symbol": "#ORG"
+      },
+      {
+        "id": "elevators",
+        "label": "Elevators & access",
+        "kind": "theme",
+        "blurb": "Station access",
+        "followDefault": false,
+        "adminSeed": true,
+        "status": "active"
+      },
+      {
+        "id": "safety",
+        "label": "Safety",
+        "kind": "theme",
+        "blurb": "Ride safety talk",
+        "followDefault": true,
+        "adminSeed": true,
+        "status": "active"
+      },
+      {
+        "id": "fares",
+        "label": "Fares & Clipper",
+        "kind": "theme",
+        "blurb": "Pricing",
+        "followDefault": false,
+        "adminSeed": true,
+        "status": "active"
+      },
+      {
+        "id": "night",
+        "label": "Late night",
+        "kind": "theme",
+        "blurb": "Owl / late service",
+        "followDefault": false,
+        "adminSeed": true,
+        "status": "active"
+      },
+      {
+        "id": "service",
+        "label": "Service advisories",
+        "kind": "theme",
+        "blurb": "Delays & work",
+        "followDefault": true,
+        "adminSeed": true,
+        "status": "active"
+      }
+    ],
+    "defaultWatchlist": [
+      "yellow",
+      "red",
+      "blue",
+      "green",
+      "orange",
+      "safety",
+      "service"
+    ],
+    "notes": "Factory followable topics (StockTwits-style). Users keep/unfollow/add on their watchlist."
+  },
+  "v": 1,
+  "cacheBust": 1
 }
