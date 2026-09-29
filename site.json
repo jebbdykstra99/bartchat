@@ -1,5 +1,6 @@
 {
   "siteId": "bartchat",
+  "dms": true,
   "redditSr": "bartchat",
   "name": "bartchat",
   "tagline": "Nothing but BART.",
