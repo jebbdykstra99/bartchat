@@ -1,7 +1,6 @@
 {
   "siteId": "bartchat",
   "dms": true,
-  "redditSr": "bartchat",
   "name": "bartchat",
   "tagline": "Nothing but BART.",
   "composePlaceholder": "What's happening on BART?",
@@ -496,5 +495,7 @@
     "notes": "Factory followable topics (StockTwits-style). Users keep/unfollow/add on their watchlist."
   },
   "v": 1,
-  "cacheBust": 1
+  "cacheBust": 1,
+  "pixel": false,
+  "redditCrosspost": false
 }
