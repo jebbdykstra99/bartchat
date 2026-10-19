@@ -1,0 +1,14 @@
+{
+  "factory": "jebbdykstra99/subx-factory",
+  "version": "v1.1.0",
+  "room": "bartchat",
+  "siteId": "bartchat",
+  "files": {
+    "factory.js": "5db3afa908549bd776b862b44582f192bbeafaa35cf80941b5243015a38ec734",
+    "styles.css": "f381781a87fd019aea29df82b962e30fee34ef19660adaf9df75c6d7b59cf2bc"
+  },
+  "keepFiles": [],
+  "exceptions": "see subx-factory EXCEPTIONS.md",
+  "stampedAt": "2026-10-19T14:00:00Z",
+  "masterRef": "subx-factory factory/v1.0.0 @ aaf157f"
+}
