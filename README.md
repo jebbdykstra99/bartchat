@@ -25,7 +25,9 @@ Until DNS is pointed, Pages will serve on the github.io URL only if the repo is 
 
 - `site.json` — siteId, name, tagline, BART theme tokens, right-rail trends, stations/topics, sample seed/notifs/threads (sample copy is **not** mixed into the live feed)
 - `factory.js` — Auth email/password, live posts (`siteId==bartchat` orderBy `createdAt` desc limit 80), image upload, poll, reply, delete, empty-state
-- `firestore.rules`, `storage.rules`, `firebase.indexes.json`, `RULES.md` — source of truth; publish in the Firebase console for **subx-skins**. Do not `firebase deploy` from an agent.
+- Rules: the reference copies live in subx-factory [`rules/`](https://github.com/jebbdykstra99/subx-factory/tree/main/rules) (not in this repo). The shared nest index is in subx-factory [`factory/firestore.indexes.json`](https://github.com/jebbdykstra99/subx-factory/blob/main/factory/firestore.indexes.json).
+- `firebase.indexes.json` (kept): the only git copy of this room's live `posts` index (`siteId` + `createdAt`). Keep it until that index is recorded in subx-factory.
+- Jebb publishes rules and indexes by hand in the Firebase console for **subx-skins**. Do not `firebase deploy` from an agent.
 
 ## Product locks
 
