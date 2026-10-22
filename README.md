@@ -25,8 +25,8 @@ Until DNS is pointed, Pages will serve on the github.io URL only if the repo is 
 
 - `site.json` — siteId, name, tagline, compose/empty-state copy, BART theme tokens, right-rail trends, stations (`places`), topics, nests, Room Brief rail config (`rail`), taxonomy, Stories and feature flags (`stories`, `features`, `dms`, `pixel`, `redditCrosspost`), `minAge`, and a `seedNote` steward note. No sample seed posts, notifs or threads (removed in #16).
 - `factory.js` — Auth email/password, live posts (`siteId==bartchat` orderBy `createdAt` desc limit 80), image upload, poll, reply, delete, empty-state
-- Rules: the reference copies live in subx-factory [`rules/`](https://github.com/jebbdykstra99/subx-factory/tree/main/rules) (not in this repo). The shared nest index is in subx-factory [`factory/firestore.indexes.json`](https://github.com/jebbdykstra99/subx-factory/blob/main/factory/firestore.indexes.json).
-- `firebase.indexes.json` (kept): the only git copy of this room's live `posts` index (`siteId` + `createdAt`). Keep it until that index is recorded in subx-factory.
+- Rules: subx-factory [`rules/`](https://github.com/jebbdykstra99/subx-factory/tree/main/rules) is **not** a source of truth for what is live. Its `firestore.rules.proposed` is behind the live Firestore rules. Its `storage.rules.proposed` matches the live Storage rules as of 2026-10-22 (subx-factory #6). The live rules are whatever Jebb last hand-published in the console. No rules files live in this repo. The shared nest index is in subx-factory [`factory/firestore.indexes.json`](https://github.com/jebbdykstra99/subx-factory/blob/main/factory/firestore.indexes.json).
+- `firebase.indexes.json` (kept): this room's git copy of the live `posts` index (`siteId` + `createdAt`). Each room keeps its own copy: bartchat has only the `posts` index, samochat adds a `stories` index, and gpchat and 27chat carry the same file (`posts` plus the `nestSlug` index). Keep it until that index is recorded in subx-factory.
 - Jebb publishes rules and indexes by hand in the Firebase console for **subx-skins**. Do not `firebase deploy` from an agent.
 
 ## Product locks
