@@ -94,7 +94,7 @@
     {
       "tag": "Line",
       "title": "Red",
-      "snippet": "Richmond ↔ Millbrae. Same platforms, opposite lives — photograph the headsign."
+      "snippet": "Richmond ↔ Millbrae. Same platforms, opposite lives: photograph the headsign."
     },
     {
       "tag": "Line",
@@ -104,7 +104,7 @@
     {
       "tag": "Line",
       "title": "Green",
-      "snippet": "Berryessa / Warm Springs ↔ Daly City. South Bay end; Union City–Warm Springs bus bridge weekends."
+      "snippet": "Berryessa / Warm Springs ↔ Daly City. South Bay end; Union City to Warm Springs bus bridge weekends."
     },
     {
       "tag": "Station",
@@ -119,7 +119,7 @@
     {
       "tag": "Station",
       "title": "MacArthur",
-      "snippet": "The bottleneck. Yellow, orange, red — pick a platform and hope."
+      "snippet": "The bottleneck. Yellow, orange, red: pick a platform and hope."
     }
   ],
   "topics": [
@@ -141,7 +141,7 @@
     {
       "tag": "Rider",
       "title": "Elevators",
-      "snippet": "Out of service notes — only when sourced from bart.gov."
+      "snippet": "Out of service notes: only when sourced from bart.gov."
     },
     {
       "tag": "Rider",
@@ -176,7 +176,7 @@
       "label": "Red",
       "parent": null,
       "kind": "service",
-      "blurb": "Richmond ↔ Millbrae. Same platforms, opposite lives — photograph the headsign.",
+      "blurb": "Richmond ↔ Millbrae. Same platforms, opposite lives: photograph the headsign.",
       "nav": true
     },
     {
@@ -192,7 +192,7 @@
       "label": "Green",
       "parent": null,
       "kind": "service",
-      "blurb": "Berryessa / Warm Springs ↔ Daly City. South Bay end; Union City–Warm Springs bus bridges.",
+      "blurb": "Berryessa / Warm Springs ↔ Daly City. South Bay end; Union City to Warm Springs bus bridges.",
       "nav": true
     },
     {
@@ -216,7 +216,7 @@
       "label": "Peninsula nights",
       "parent": null,
       "kind": "theme",
-      "blurb": "Millbrae–SFO–Daly City late work, cutoffs, last-train sprint talk.",
+      "blurb": "Millbrae to SFO to Daly City late work, cutoffs, last-train sprint talk.",
       "nav": true
     },
     {
@@ -224,7 +224,7 @@
       "label": "South Bay",
       "parent": null,
       "kind": "place",
-      "blurb": "Berryessa / Warm Springs / Union City end — weekend bus bridges and headsign traps.",
+      "blurb": "Berryessa / Warm Springs / Union City end: weekend bus bridges and headsign traps.",
       "nav": true
     },
     {
@@ -232,7 +232,7 @@
       "label": "East Bay",
       "parent": null,
       "kind": "place",
-      "blurb": "Richmond–Antioch–Dublin spines inland of the Tube. Transfers at MacArthur / 12th St.",
+      "blurb": "Richmond, Antioch, Dublin spines inland of the Tube. Transfers at MacArthur / 12th St.",
       "nav": true
     }
   ],
@@ -254,7 +254,7 @@
       "prompt": "Clear board or weekend bus bridge?",
       "options": [
         "Clear BSA",
-        "Sep 26–27 bridge"
+        "Sep 26 to 27 bridge"
       ],
       "dwellMs": 9000
     },
@@ -270,7 +270,7 @@
         "tag": "Watch",
         "headline": "BARTable",
         "url": "https://www.youtube.com/BARTable",
-        "snippet": "BART official YouTube channel (Board meeting video/live). Outbound only — no in-app re-stream.",
+        "snippet": "BART official YouTube channel (Board meeting video/live). Outbound only, no in-app re-stream.",
         "meta": "Official · link-out"
       }
     ],
@@ -285,7 +285,7 @@
         "id": "yellow",
         "label": "Yellow Line",
         "kind": "agency",
-        "blurb": "Antioch–SFO/Millbrae",
+        "blurb": "Antioch to SFO/Millbrae",
         "followDefault": true,
         "adminSeed": true,
         "status": "active",
@@ -295,7 +295,7 @@
         "id": "red",
         "label": "Red Line",
         "kind": "agency",
-        "blurb": "Richmond–Millbrae",
+        "blurb": "Richmond to Millbrae",
         "followDefault": true,
         "adminSeed": true,
         "status": "active",
@@ -305,7 +305,7 @@
         "id": "blue",
         "label": "Blue Line",
         "kind": "agency",
-        "blurb": "Dublin/Pleasanton–Daly City",
+        "blurb": "Dublin/Pleasanton to Daly City",
         "followDefault": true,
         "adminSeed": true,
         "status": "active",
@@ -315,7 +315,7 @@
         "id": "green",
         "label": "Green Line",
         "kind": "agency",
-        "blurb": "Berryessa–Daly City",
+        "blurb": "Berryessa to Daly City",
         "followDefault": true,
         "adminSeed": true,
         "status": "active",
@@ -325,7 +325,7 @@
         "id": "orange",
         "label": "Orange Line",
         "kind": "agency",
-        "blurb": "Richmond–Berryessa",
+        "blurb": "Richmond to Berryessa",
         "followDefault": true,
         "adminSeed": true,
         "status": "active",
