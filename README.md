@@ -27,12 +27,12 @@ Until DNS is pointed, Pages will serve on the github.io URL only if the repo is 
 - `factory.js` — Auth email/password, live posts (`siteId==bartchat` orderBy `createdAt` desc limit 80), image upload, poll, reply, delete, empty-state
 - Rules: subx-factory [`rules/`](https://github.com/jebbdykstra99/subx-factory/tree/main/rules) is **not** a source of truth for what is live. Its `firestore.rules.proposed` is behind the live Firestore rules. Its `storage.rules.proposed` matches the live Storage rules as of 2026-10-22 (subx-factory #6). The live rules are whatever Jebb last hand-published in the console. No rules files live in this repo. The shared nest index is in subx-factory [`factory/firestore.indexes.json`](https://github.com/jebbdykstra99/subx-factory/blob/main/factory/firestore.indexes.json).
 - `firebase.indexes.json` (kept): this room's git copy of the live `posts` index (`siteId` + `createdAt`). Each room keeps its own copy: bartchat has only the `posts` index, samochat adds a `stories` index, and gpchat and 27chat carry the same file (`posts` plus the `nestSlug` index). Keep it until that index is recorded in subx-factory.
-- Jebb publishes rules and indexes by hand in the Firebase console for **subx-skins**. Do not `firebase deploy` from an agent.
+- SubX publishes rules and indexes by hand in the Firebase console for **subx-skins**. Do not `firebase deploy` from an agent.
 
 ## Product locks
 
 - Guest is browse-only. Google provider stays off until enabled.
 - Images `image/*` ≤ 5 MB. GIF is a user-uploaded `.gif`, not Tenor.
 - AI off the hot path. No Reddit/X ingest.
-- Preview banner and `robots.txt` noindex stay until Jebb lifts them.
+- Preview banner and `robots.txt` noindex stay until SubX lifts them.
 - Not official BART. Not X.com.
