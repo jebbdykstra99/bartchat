@@ -4,11 +4,12 @@
   "room": "bartchat",
   "siteId": "bartchat",
   "files": {
-    "factory.js": "3ca317ef3b982204ed82e7385251a1316dda27974f9a48a06229cae1ac0dfed5",
-    "styles.css": "556f6d5a6df319eb4742b2141e5d1548dc0d5d8aaa2ccb2fe0186704e9ace351"
+    "factory.js": "4d9966698975cb4676a77cb81913223762eebfd3612a969ddcfd7740ecf37fe7",
+    "styles.css": "556f6d5a6df319eb4742b2141e5d1548dc0d5d8aaa2ccb2fe0186704e9ace351",
+    "factory-rail.js": "8e46b4103d39163b6ffec3afdb7d0239930ae419c61f5d1a073cd3971bf71abf"
   },
   "keepFiles": [],
   "exceptions": "see subx-factory EXCEPTIONS.md",
-  "stampedAt": "2026-10-24T14:35:00Z",
-  "masterRef": "subx-factory main @ cb86a9b (FACTORY_RELEASE.json v1.2.5)"
+  "stampedAt": "2026-10-26T14:05:00Z",
+  "masterRef": "subx-factory main @ 346b55e (FACTORY_RELEASE.json v1.2.5)"
 }
