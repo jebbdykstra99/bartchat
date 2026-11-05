@@ -1,14 +1,16 @@
 {
   "factory": "jebbdykstra99/subx-factory",
-  "version": "v1.0.1+nr (hand lock 2026-10-30)",
+  "version": "v1.2.8",
   "room": "bartchat",
   "siteId": "bartchat",
   "files": {
-    "factory.js": "3ca317ef3b982204ed82e7385251a1316dda27974f9a48a06229cae1ac0dfed5",
+    "factory.js": "8cf2d04a0323c6fcc0a684c8861ce3100af68b90a9a7d0350f475d68e0fed853",
+    "factory-rail.js": "6e6a593e2009ed7318e36a1d2987b0e153f918141efcf288b36523bf69adb5ba",
     "styles.css": "556f6d5a6df319eb4742b2141e5d1548dc0d5d8aaa2ccb2fe0186704e9ace351"
   },
-  "keepFiles": [],
+  "keepFiles": [
+    "takedown.js"
+  ],
   "exceptions": "see subx-factory EXCEPTIONS.md",
-  "stampedAt": "2026-10-30T13:30:00Z",
-  "masterRef": "subx-factory factory/v1.0.0 @ aaf157f"
+  "stampedAt": "2026-11-05T17:55:25Z"
 }
