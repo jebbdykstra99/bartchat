@@ -4,7 +4,7 @@
   "room": "bartchat",
   "siteId": "bartchat",
   "files": {
-    "factory.js": "8cf2d04a0323c6fcc0a684c8861ce3100af68b90a9a7d0350f475d68e0fed853",
+    "factory.js": "e3a8df039c327664679121a12213a0d5018a3fc64fac4722e275e2ea72c1e4ae",
     "factory-rail.js": "6e6a593e2009ed7318e36a1d2987b0e153f918141efcf288b36523bf69adb5ba",
     "styles.css": "556f6d5a6df319eb4742b2141e5d1548dc0d5d8aaa2ccb2fe0186704e9ace351"
   },
