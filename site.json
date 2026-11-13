@@ -151,7 +151,7 @@
     {
       "tag": "Trust",
       "title": "Not official BART",
-      "snippet": "Advisories from bart.gov. Ads off in preview."
+      "snippet": "Advisories from bart.gov. Ads off in public beta."
     }
   ],
   "nests": [
@@ -247,7 +247,7 @@
     "title": "Room Brief",
     "kicker": "On BART",
     "meta": "Live · BART · Fri FACT",
-    "footer": "Official BART advisories. Fri Sep 25 FACT: no live advisories as of ~12:10a PDT. Not a news ingest. Not official BART. Ads off in preview.",
+    "footer": "Official BART advisories. Fri Sep 25 FACT: no live advisories as of ~12:10a PDT. Not a news ingest. Not official BART. Ads off in public beta.",
     "bartKey": "MW9S-E7SL-26DU-VV8V",
     "forecastPage": "https://www.bart.gov/schedules/advisories",
     "porch": {
