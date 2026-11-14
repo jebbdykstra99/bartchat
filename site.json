@@ -242,6 +242,23 @@
     "maxBytes": 8000000
   },
   "seedNote": "STEWARD_REFRESH Fri 2026-09-25 · BART Advisories/BARTable · no second Berryessa fight",
+  "featured": {
+    "featuredDays": 3,
+    "maxPinned": 3,
+    "articleMinChars": 600,
+    "label": "Our articles",
+    "handles": [
+      "transbaynotes",
+      "platformsense",
+      "clipperdesk",
+      "linecolordesk",
+      "bsadesk",
+      "missionaccess",
+      "eastbaytrack",
+      "peninsulanight",
+      "southbayrail"
+    ]
+  },
   "rail": {
     "kind": "bart-bsa",
     "title": "Room Brief",
